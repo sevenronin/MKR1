@@ -1,0 +1,24 @@
+﻿<Window x:Class="MovieFinder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
+        xmlns:local="clr-namespace:MovieFinder"
+        mc:Ignorable="d"
+        Title="MovieFinder!" Height="244" Width="279" Background="#FF7A6392" ResizeMode="NoResize" Foreground="White">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button Content="Подобрать фильм" HorizontalAlignment="Center" Margin="0,146,0,0" VerticalAlignment="Top" Height="40" Width="210" Click="Button_Click" Cursor="Hand" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFC59AE7" BorderBrush="{x:Null}" Style="{DynamicResource MaterialDesignFlatAccentBgButton}" Foreground="White"/>
+        <ComboBox x:Name="genres_list" HorizontalAlignment="Left" Margin="140,30,0,0" VerticalAlignment="Top" Width="90" Height="25" Foreground="White" Background="#FF745889" HorizontalContentAlignment="Center" Style="{DynamicResource MaterialDesignComboBox}" Template="{DynamicResource MaterialDesignDataGridComboBoxTemplate}" FontSize="10" />
+        <ComboBox x:Name="years_list" HorizontalAlignment="Left" Margin="174,65,0,0" VerticalAlignment="Top" Width="56" Height="25" Foreground="White" Background="#FF745889" HorizontalContentAlignment="Right" Style="{DynamicResource MaterialDesignFilledComboBox}" Template="{DynamicResource MaterialDesignDataGridComboBoxTemplate}" BorderBrush="#89FFFFFF" FontSize="10" />
+        <CheckBox x:Name="cb_comedy" Content="Комедия" HorizontalAlignment="Left" Margin="36,23,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked" FontSize="14" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" />
+        <CheckBox x:Name="cb_drama" Content="Драма" HorizontalAlignment="Left" Margin="36,49,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked" FontSize="14" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" />
+        <CheckBox x:Name="cb_action" HorizontalAlignment="Left" Margin="36,75,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked" FontSize="14" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Content="Боевик" />
+        <CheckBox x:Name="cb_horror" HorizontalAlignment="Left" Margin="36,0,0,0" VerticalAlignment="Center" Checked="CheckBox_Checked" FontSize="14" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Content="Ужасы" />
+
+    </Grid>
+
+</Window>
