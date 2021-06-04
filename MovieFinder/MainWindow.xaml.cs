@@ -123,7 +123,7 @@ namespace MovieFinder
                     chosenGanresIDs.Remove(GenresIDs[genre]);
                 
             }
-            finally { }
+            catch (Exception) { }
         }
     }
 
@@ -150,7 +150,9 @@ namespace MovieFinder
 
         private void btn_roll_Click(object sender, RoutedEventArgs e)
         {
-            roller.ParseMovie();
+            if (release == ReleaseYear.Old || release == ReleaseYear.New)
+                roller.ParseMovie(release);
+            else roller.ParseMovie(0,release_year);
         }
 
         private void cb_comedy_Checked(object sender, RoutedEventArgs e)
@@ -205,7 +207,7 @@ namespace MovieFinder
             {
                 roller.AddRemoveGenre(chosenOtherGenre, true);
             }
-            finally { };
+            catch (Exception) { }
         }
 
         private void genres_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -220,7 +222,7 @@ namespace MovieFinder
                     roller.AddRemoveGenre(chosenOtherGenre, true);
                 }
             }
-            finally { }
+            catch (Exception) { }
         }
 
         private void rb_old_movies_Checked(object sender, RoutedEventArgs e)
@@ -233,10 +235,15 @@ namespace MovieFinder
             release = ReleaseYear.New;
         }
 
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        private void rb_user_movies_Checked(object sender, RoutedEventArgs e)
         {
             release = ReleaseYear.User;
-            release_year = int.Parse(years_list.Text);
+            release_year = int.Parse(years_list.SelectedItem.ToString());
+        }
+
+        private void years_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            release_year = int.Parse(years_list.SelectedItem.ToString());
         }
     }
 }

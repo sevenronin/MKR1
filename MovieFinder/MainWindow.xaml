@@ -17,11 +17,11 @@
         <CheckBox x:Name="cb_action" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Content="Боевик" Margin="34,73,0,0" Foreground="White" Checked="cb_action_Checked" Unchecked="cb_action_Unchecked" />
         <CheckBox x:Name="cb_horror" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Content="Ужасы" Foreground="White" Margin="34,97,0,0" Unchecked="cb_horror_Unchecked" Checked="cb_horror_Checked" />
         <ComboBox x:Name="genres_list" HorizontalAlignment="Left" Margin="109,124,0,0" VerticalAlignment="Top" Width="80" SelectionChanged="genres_list_SelectionChanged" SelectedIndex="0"/>
-        <ComboBox x:Name="years_list" HorizontalAlignment="Left" Margin="161,75,0,0" VerticalAlignment="Top" Width="80"/>
+        <ComboBox x:Name="years_list" HorizontalAlignment="Left" Margin="161,75,0,0" VerticalAlignment="Top" Width="80" SelectionChanged="years_list_SelectionChanged" SelectedIndex="0"/>
         <CheckBox x:Name="cb_other" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Content="Другое" Foreground="White" Margin="34,121,0,0" Checked="cb_other_Checked" Unchecked="cb_other_Unchecked" />
         <RadioButton x:Name="rb_old_movies" Content="Старое" HorizontalAlignment="Left" Margin="142,30,0,0" VerticalAlignment="Top" Foreground="White" Checked="rb_old_movies_Checked" IsChecked="True"/>
         <RadioButton x:Name="rb_new_movies" Content="Современное" HorizontalAlignment="Left" Margin="142,54,0,0" VerticalAlignment="Top" Foreground="White" Checked="rb_new_movies_Checked"/>
-        <RadioButton Content="" HorizontalAlignment="Left" Margin="142,78,0,0" VerticalAlignment="Top" Checked="RadioButton_Checked"/>
+        <RadioButton x:Name="rb_user_movies" Content="" HorizontalAlignment="Left" Margin="142,78,0,0" VerticalAlignment="Top" Checked="rb_user_movies_Checked"/>
         <TextBox x:Name="txt_rolled_movie" HorizontalAlignment="Center" Margin="0,213,0,0" Text="Подобранный фильм..." TextWrapping="Wrap" VerticalAlignment="Top" Width="210" FontSize="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="21"/>
 
     </Grid>
