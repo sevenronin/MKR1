@@ -12,5 +12,5 @@ by genre or by year, if you can't decide what to watch</br>
 - Polygalov Vladimir - `Architect + Developer`</br>
 - Plakhina Tatiana - `Developer`</br>
 - Timiskova Anna - `QA (Tester)`</br>
-- Soboleva Daria - `Developer`</br>
+- Soboleva Darya - `Developer`</br>
 
