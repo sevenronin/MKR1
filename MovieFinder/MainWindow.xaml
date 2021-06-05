@@ -6,7 +6,7 @@
         
         xmlns:local="clr-namespace:MovieFinder"
         mc:Ignorable="d"
-        Title="MovieFinder!" Height="284" Width="279" Background="#FF292929" ResizeMode="NoResize" Foreground="White"
+        Title="MovieFinder!" Height="264" Width="279" Background="#FF292929" ResizeMode="NoResize" Foreground="White"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <Window.Resources>
         <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
@@ -335,7 +335,11 @@
         <RadioButton x:Name="rb_old_movies" Content="Старое" HorizontalAlignment="Left" Margin="142,30,0,0" VerticalAlignment="Top" Foreground="White" Checked="rb_old_movies_Checked" IsChecked="True"/>
         <RadioButton x:Name="rb_new_movies" Content="Современное" HorizontalAlignment="Left" Margin="142,54,0,0" VerticalAlignment="Top" Foreground="White" Checked="rb_new_movies_Checked"/>
         <RadioButton x:Name="rb_user_movies" Content="" HorizontalAlignment="Left" Margin="142,78,0,0" VerticalAlignment="Top" Checked="rb_user_movies_Checked"/>
-        <TextBox x:Name="txt_rolled_movie" HorizontalAlignment="Center" Margin="0,205,0,0" Text="Подобранный фильм..." TextWrapping="Wrap" VerticalAlignment="Top" Width="210" FontSize="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="21"/>
+        <Canvas x:Name="rolled_movie_canvas" HorizontalAlignment="Center" Margin="0,160,0,0" VerticalAlignment="Top" Width="211" Height="40" Visibility="Hidden">
+            <TextBox x:Name="txt_rolled_movie" TextWrapping="Wrap" Width="166" FontSize="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="41"/>
+            <Button x:Name="btn_reroll" Content="roll" Template="{DynamicResource RoundedButton}" Height="40" Width="38" Canvas.Left="173" Click="btn_reroll_Click"/>
+
+        </Canvas>
 
     </Grid>
 
