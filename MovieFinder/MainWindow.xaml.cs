@@ -152,7 +152,9 @@ namespace MovieFinder
             catch (Exception) { }
         }
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class MainWindow : Window
     {
         MovieRoller roller; // сам подборщик фильмов
