@@ -170,6 +170,9 @@ namespace MovieFinder
             foreach (GenreName genre in Enum.GetValues(typeof(GenreName)))
                 genres_list.Items.Add(genre);
 
+            /*for (GenreName genre = 0; (int)genre < 18; ++genre)
+                genres_list.Items.Add(genre);*/
+
             for (int i = 2021; i > 1949; --i)
                 years_list.Items.Add(i);       
         }
