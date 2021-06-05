@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ using System.Windows.Shapes;
 using TMDbLib;
 using TMDbLib.Client;
 using TMDbLib.Objects.Discover;
+using TMDbLib.Objects.General;
 using TMDbLib.Objects.Genres;
 using TMDbLib.Objects.Movies;
 using TMDbLib.Objects.Search;
@@ -24,25 +26,25 @@ namespace MovieFinder
 {
     public enum GenreName
     {
-        Action,
-        Adventure,
-        Animation,
-        Comedy,
-        Crime,
-        Documentary,
-        Drama,
-        Family,
-        Fantasy,
-        History,
-        Horror,
-        Music,
-        Mystery,
-        Romance,
-        ScienceFiction,
-        TVMovie,
-        Thriller,
-        War,
-        Western
+        Action = 28,
+        Adventure = 12,
+        Animation = 16,
+        Comedy = 35,
+        Crime = 80,
+        Documentary = 99,
+        Drama = 18,
+        Family = 10751,
+        Fantasy = 14,
+        History = 36,
+        Horror = 27,
+        Music = 10402,
+        Mystery = 9648,
+        Romance = 10749,
+        ScienceFiction = 878,
+        TVMovie = 10770,
+        Thriller = 53,
+        War = 10752,
+        Western = 37
     }
 
     public enum ReleaseYear
@@ -73,8 +75,8 @@ namespace MovieFinder
 
         async public void ParseMovie(ReleaseYear release = ReleaseYear.Old, int year = 9999)
         {
-            await client.GetConfigAsync();
-            //chosenGanresIDs.Add(28); //для теста добавим жанр - "Action"
+            int amnt_checking_pages = 5;
+
             if (chosenGanresIDs.Count == 0)
             {
                 MessageBox.Show("Выберите хотя бы один жанр!");
@@ -82,6 +84,8 @@ namespace MovieFinder
             }
             else
             {
+                await client.GetConfigAsync();
+                //chosenGanresIDs.Add(28); //для теста добавим жанр - "Action"
                 if (year != 9999)
                 {
                     primary_year = year;
@@ -91,23 +95,45 @@ namespace MovieFinder
                     primary_year = new Random().Next(1950, 2000);
                 }
                 else primary_year = new Random().Next(2001, 2021);
-                
-                var rolled_movies = await client.
-                        DiscoverMoviesAsync().
-                        IncludeWithAnyOfGenre(chosenGanresIDs).
-                        OrderBy(DiscoverMovieSortBy.PopularityDesc).
-                        WherePrimaryReleaseIsInYear(primary_year).
-                        Query();
-                rolled_movie = rolled_movies.Results[new Random().Next(0, rolled_movies.Results.Count() - 1)];
-                main_Window.txt_rolled_movie.Text = rolled_movie.Title;
+                SearchContainer<SearchMovie> rolled_movies = null;
+                bool rolled = false;
+                while (!rolled)
+                {
+                    try
+                    {
+                         rolled_movies = await client.
+                                DiscoverMoviesAsync().
+                                IncludeWithAnyOfGenre(chosenGanresIDs).
+                                OrderBy(DiscoverMovieSortBy.PopularityDesc).
+                                WherePrimaryReleaseIsInYear(primary_year).
+                                Query(new Random().Next(1,amnt_checking_pages));
+                        rolled = true;
+                    }
+                    catch (Exception) { }
+                }
+
+                if (rolled)
+                {
+                    rolled_movie = rolled_movies.Results[new Random().Next(0, rolled_movies.Results.Count() - 1)];
+                    main_Window.txt_rolled_movie.Text = rolled_movie.Title;
+
+                    if (main_Window.txt_rolled_movie.Text.Length > 1)
+                    {
+                        main_Window.btn_roll.Visibility = Visibility.Hidden; //если нажали кнопку рола фильма и рол был успешен, скроем кнопку
+                        main_Window.rolled_movie_canvas.Visibility = Visibility.Visible;
+                    }
+                }
             }
         }
 
-        async void ParseGanresIDs()
+        void ParseGanresIDs()
         {
-            var genres_list = await client.GetMovieGenresAsync();
+            foreach (GenreName genre in Enum.GetValues(typeof(GenreName)))
+                GenresIDs[genre] = (int)genre;
+
+            /*var genres_list = await client.GetMovieGenresAsync();
             for (GenreName genre = 0; (int)genre < genres_list.Count; ++genre)
-                GenresIDs[genre] = genres_list[(int)genre].Id;
+                GenresIDs[genre] = genres_list[(int)genre].Id;*/
         }
 
         public void AddRemoveGenre(GenreName genre, bool remove = false)
@@ -139,13 +165,16 @@ namespace MovieFinder
         public MainWindow()
         {
             InitializeComponent();
+            roller = new MovieRoller(this);
 
-            for (GenreName genre = 0; (int)genre < 18; ++genre)
+            foreach (GenreName genre in Enum.GetValues(typeof(GenreName)))
                 genres_list.Items.Add(genre);
-            for (int i = 1950; i < 2022; ++i)
-                years_list.Items.Add(i);
 
-            roller = new MovieRoller(this);     
+            /*for (GenreName genre = 0; (int)genre < 18; ++genre)
+                genres_list.Items.Add(genre);*/
+
+            for (int i = 2021; i > 1949; --i)
+                years_list.Items.Add(i);       
         }
 
         private void btn_roll_Click(object sender, RoutedEventArgs e)
@@ -153,6 +182,7 @@ namespace MovieFinder
             if (release == ReleaseYear.Old || release == ReleaseYear.New)
                 roller.ParseMovie(release);
             else roller.ParseMovie(0,release_year);
+           
         }
 
         private void cb_comedy_Checked(object sender, RoutedEventArgs e)
@@ -244,6 +274,13 @@ namespace MovieFinder
         private void years_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             release_year = int.Parse(years_list.SelectedItem.ToString());
+        }
+
+        private void btn_reroll_Click(object sender, RoutedEventArgs e)
+        {
+            if (release == ReleaseYear.Old || release == ReleaseYear.New)
+                roller.ParseMovie(release);
+            else roller.ParseMovie(0, release_year);
         }
     }
 }
