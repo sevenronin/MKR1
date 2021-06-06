@@ -13,4 +13,3 @@ by genre or by year, if you can't decide what to watch</br>
 - Plakhina Tatiana - `Developer`</br>
 - Timiskova Anna - `QA (Tester)`</br>
 - Soboleva Darya - `Developer`</br>
-

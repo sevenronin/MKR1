@@ -6,7 +6,7 @@
         
         xmlns:local="clr-namespace:MovieFinder"
         mc:Ignorable="d"
-        Title="MovieFinder!" Height="264" Width="279" Background="#FF292929" ResizeMode="NoResize" Foreground="White"
+        Title="MovieFinder!" Height="264" Width="469" Background="#FF292929" ResizeMode="NoResize" Foreground="White"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <Window.Resources>
         <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
@@ -17,7 +17,7 @@
         <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
         <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
         <ControlTemplate x:Key="RoundedButton" TargetType="{x:Type ButtonBase}">
-            <Border x:Name="border" CornerRadius="5" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="true">
+            <Border x:Name="border" CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="true">
                 <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
             </Border>
             <ControlTemplate.Triggers>
@@ -340,6 +340,7 @@
             <Button x:Name="btn_reroll" Content="roll" Template="{DynamicResource RoundedButton}" Height="40" Width="38" Canvas.Left="173" Click="btn_reroll_Click"/>
 
         </Canvas>
+        <ListBox x:Name="genres_listbox" Margin="269,25,74,103" SelectedIndex="0"/>
 
     </Grid>
 

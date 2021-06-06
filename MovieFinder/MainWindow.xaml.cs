@@ -65,26 +65,31 @@ namespace MovieFinder
         List<int> chosenGanresIDs = new List<int>(); //добавление/удаление жанра = select/unselect чекбокса у жанра
         Dictionary<GenreName , int> GenresIDs = new Dictionary<GenreName, int>(); //список жанров с их ID   
 
+        List<GenreName> genres = new List<GenreName>();
+
         public MovieRoller(MainWindow mainW)
         {
             main_Window = mainW;
             client = new TMDbClient(api_key);
             client.DefaultLanguage = "ru";
+
+            main_Window.genres_listbox.ItemsSource = Enum.GetValues(typeof(GenreName));
+
             ParseGanresIDs();
         }
 
         async public void ParseMovie(ReleaseYear release = ReleaseYear.Old, int year = 9999)
         {
-            int amnt_checking_pages = 5;
+            int amnt_checking_pages = 5; //кол-во обратываеых страниц с фильмами
 
-            if (chosenGanresIDs.Count == 0)
+            if (chosenGanresIDs.Count == 0) 
             {
                 MessageBox.Show("Выберите хотя бы один жанр!");
                 return;
             }
             else
             {
-                await client.GetConfigAsync();
+                //await client.GetConfigAsync(); //до этого без этой функции ничего не работало, а щас работает, почему - хз
                 //chosenGanresIDs.Add(28); //для теста добавим жанр - "Action"
                 if (year != 9999)
                 {
@@ -152,9 +157,8 @@ namespace MovieFinder
             catch (Exception) { }
         }
     }
-
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// 
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -249,7 +253,7 @@ namespace MovieFinder
                 {
                     roller.AddRemoveGenre(chosenOtherGenre, true);
                     chosenOtherGenre = (GenreName)Enum.Parse(typeof(GenreName), genres_list.Text);
-                    roller.AddRemoveGenre(chosenOtherGenre, true);
+                    roller.AddRemoveGenre(chosenOtherGenre);
                 }
             }
             catch (Exception) { }
