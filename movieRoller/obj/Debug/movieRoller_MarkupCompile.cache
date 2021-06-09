@@ -4,6 +4,7 @@
 winexe
 C#
 .cs
+<<<<<<< Updated upstream:movieRoller/obj/Debug/movieRoller_MarkupCompile.cache
 C:\Users\.jpeg\source\repos\movieRoller\movieRoller\obj\Debug\
 movieRoller
 none
@@ -14,6 +15,18 @@ C:\Users\.jpeg\source\repos\movieRoller\movieRoller\App.xaml
 
 5-2017746502
 781838142033
+=======
+C:\Users\Иван\Desktop\PR\MKR1\MovieFinder\obj\Debug\netcoreapp3.1\
+MovieFinder
+none
+false
+TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
+C:\Users\Иван\Desktop\PR\MKR1\MovieFinder\App.xaml
+11407045341
+
+3-1233169557
+208-1480441740
+>>>>>>> Stashed changes:MovieFinder/obj/Debug/netcoreapp3.1/MovieFinder_MarkupCompile.cache
 MainWindow.xaml;
 
 False

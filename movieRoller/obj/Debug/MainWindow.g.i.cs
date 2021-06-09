@@ -178,11 +178,17 @@ namespace movieRoller
         /// InitializeComponent
         /// </summary>
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
+<<<<<<< Updated upstream:movieRoller/obj/Debug/MainWindow.g.i.cs
         [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "4.0.0.0")]
         public void InitializeComponent()
         {
             if (_contentLoaded)
             {
+=======
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "5.0.6.0")]
+        public void InitializeComponent() {
+            if (_contentLoaded) {
+>>>>>>> Stashed changes:MovieFinder/obj/Debug/netcoreapp3.1/MainWindow.g.i.cs
                 return;
             }
             _contentLoaded = true;
@@ -196,7 +202,11 @@ namespace movieRoller
         }
 
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
+<<<<<<< Updated upstream:movieRoller/obj/Debug/MainWindow.g.i.cs
         [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "4.0.0.0")]
+=======
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "5.0.6.0")]
+>>>>>>> Stashed changes:MovieFinder/obj/Debug/netcoreapp3.1/MainWindow.g.i.cs
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Design", "CA1033:InterfaceMethodsShouldBeCallableByChildTypes")]
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
