@@ -58,7 +58,11 @@ namespace movieRoller
 
     public class MovieRoller
     {
+<<<<<<< refs/remotes/origin/mainFunctional:movieRoller/MainWindow.xaml.cs~refs/remotes/origin/mainFunctional
         MainWindow main_Window; //aaa
+=======
+        MainWindow main_Window; //
+>>>>>>> fix:movieRoller/MainWindow.xaml.cs
         TMDbClient client; //клиент для работы с api
         string api_key = "ed7d16aeb09ffce311534f878ece4fb3";
         SearchMovie rolled_movie; //подобранный фильм
