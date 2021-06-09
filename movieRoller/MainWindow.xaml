@@ -1,0 +1,35 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:movieRoller"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="movieRoller.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="282" Width="659" Background="#FF302F30">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="btn_roll" Content="Подобрать фильм" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="211" Click="btn_roll_Click" Cursor="Hand" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF4B4B4B" BorderBrush="White" Foreground="White" Margin="34,175,0,0"/>
+        <CheckBox x:Name="cb_comedy" Content="Комедия" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Margin="34,25,0,0" Foreground="White" Checked="cb_comedy_Checked" Unchecked="cb_comedy_Unchecked" />
+        <CheckBox x:Name="cb_drama" Content="Драма" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Margin="34,49,0,0" Foreground="White" Checked="cb_drama_Checked" Unchecked="cb_drama_Unchecked" />
+        <CheckBox x:Name="cb_action" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Content="Боевик" Margin="34,73,0,0" Foreground="White" Checked="cb_action_Checked" Unchecked="cb_action_Unchecked" />
+        <CheckBox x:Name="cb_horror" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Content="Ужасы" Foreground="White" Margin="34,97,0,0" Unchecked="cb_horror_Unchecked" Checked="cb_horror_Checked" />
+        <ComboBox  x:Name="genres_list" HorizontalAlignment="Left" Margin="109,124,0,0" VerticalAlignment="Top" Width="80" SelectionChanged="genres_list_SelectionChanged" SelectedIndex="0"/>
+        <ComboBox x:Name="years_list" HorizontalAlignment="Left" Margin="161,75,0,0" VerticalAlignment="Top" Width="80" SelectionChanged="years_list_SelectionChanged" SelectedIndex="0"/>
+        <CheckBox x:Name="cb_other" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Content="Другое" Foreground="White" Margin="34,121,0,0" Checked="cb_other_Checked" Unchecked="cb_other_Unchecked" />
+        <RadioButton x:Name="rb_old_movies" Content="Старое" HorizontalAlignment="Left" Margin="142,30,0,0" VerticalAlignment="Top" Foreground="White" Checked="rb_old_movies_Checked" IsChecked="True"/>
+        <RadioButton x:Name="rb_new_movies" Content="Современное" HorizontalAlignment="Left" Margin="142,54,0,0" VerticalAlignment="Top" Foreground="White" Checked="rb_new_movies_Checked"/>
+        <RadioButton x:Name="rb_user_movies" Content="" HorizontalAlignment="Left" Margin="142,78,0,0" VerticalAlignment="Top" Checked="rb_user_movies_Checked"/>
+        <Canvas x:Name="rolled_movie_canvas" HorizontalAlignment="Center" Margin="34,175,406,0" VerticalAlignment="Top" Width="211" Height="40" Visibility="Hidden">
+            <TextBox x:Name="txt_rolled_movie" TextWrapping="Wrap" Width="166" FontSize="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="41"/>
+            <Button x:Name="btn_reroll" Content="roll" Height="40" Width="38" Canvas.Left="173" Click="btn_reroll_Click"/>
+
+        </Canvas>
+        <xctk:RangeSlider x:Name="years_slider" HorizontalAlignment="Left" Margin="300,121,0,0" VerticalAlignment="Top" Width="90"/>
+
+
+    </Grid>
+
+</Window>
