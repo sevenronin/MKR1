@@ -42,7 +42,6 @@ C:\Users\.jpeg\source\repos\movieRoller\movieRoller\bin\Debug\TMDbLib.dll
 C:\Users\.jpeg\source\repos\movieRoller\movieRoller\bin\Debug\Newtonsoft.Json.xml
 C:\Users\.jpeg\source\repos\movieRoller\movieRoller\bin\Debug\System.Diagnostics.DiagnosticSource.xml
 C:\Users\.jpeg\source\repos\movieRoller\movieRoller\bin\Debug\TMDbLib.xml
-<<<<<<< refs/remotes/origin/mainFunctional
 C:\git\MKR1\movieRoller\bin\Debug\movieRoller.exe.config
 C:\git\MKR1\movieRoller\bin\Debug\movieRoller.exe
 C:\git\MKR1\movieRoller\bin\Debug\movieRoller.pdb
@@ -87,5 +86,3 @@ C:\git\MKR1\movieRoller\obj\Debug\movieRoller.csproj.CoreCompileInputs.cache
 C:\git\MKR1\movieRoller\obj\Debug\movieRoller.csproj.CopyComplete
 C:\git\MKR1\movieRoller\obj\Debug\movieRoller.exe
 C:\git\MKR1\movieRoller\obj\Debug\movieRoller.pdb
-=======
->>>>>>> migrate to netframework

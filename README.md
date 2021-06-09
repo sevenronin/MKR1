@@ -5,7 +5,6 @@ The name of the project is ***movieFinder!*** or ***findMovie!*** </br>
 Link to all project work done: [**Go**](https://www.youtube.com/watch?v=ZhIsAZO5gl0) </br>
 The idea of the project: search for a movie randomly, 
 by genre or by year, if you can't decide what to watch</br>
-Board [**Trello**](https://trello.com/b/Saox1goj/mkr1)</br>
 ## Participants:</br>
 - Buzmakov Ivan - `Project Manager`</br>
 - Kondratenkov Valeriy - `Release Manager` </br>
