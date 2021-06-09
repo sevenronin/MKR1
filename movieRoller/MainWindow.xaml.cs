@@ -91,7 +91,6 @@ namespace movieRoller
                 //await client.GetConfigAsync(); //до этого без этой функции ничего не работало, а щас работает, почему - хз
                 //chosenGanresIDs.Add(28); //для теста добавим жанр - "Action"
                 primary_year = new Random().Next((int)main_Window.years_slider.LowerValue, (int)main_Window.years_slider.HigherValue);
-                MessageBox.Show(((int)main_Window.years_slider.LowerValue).ToString());
                 SearchContainer<SearchMovie> rolled_movies = null;
                 bool rolled = false;
                 while (!rolled)

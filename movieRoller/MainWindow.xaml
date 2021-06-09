@@ -6,12 +6,12 @@
         xmlns:local="clr-namespace:movieRoller"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="movieRoller.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="282" Width="298" Background="#FF302F30" ResizeMode="NoResize">
+        Title="MainWindow" Height="282" Width="298" Background="#FF2C2C2C" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="btn_roll" Content="Подобрать фильм" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="211" Click="btn_roll_Click" Cursor="Hand" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF4B4B4B" BorderBrush="White" Foreground="White" Margin="34,175,0,0"/>
+        <Button x:Name="btn_roll" Content="Подобрать фильм" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="211" Click="btn_roll_Click" Cursor="Hand" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FF4B4B4B" BorderBrush="#FFFF00C5" Foreground="White" Margin="34,175,0,0"/>
         <CheckBox x:Name="cb_comedy" Content="Комедия" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Margin="34,25,0,0" Foreground="White" Checked="cb_comedy_Checked" Unchecked="cb_comedy_Unchecked" />
         <CheckBox x:Name="cb_drama" Content="Драма" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Margin="34,49,0,0" Foreground="White" Checked="cb_drama_Checked" Unchecked="cb_drama_Unchecked" />
         <CheckBox x:Name="cb_action" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Content="Боевик" Margin="34,73,0,0" Foreground="White" Checked="cb_action_Checked" Unchecked="cb_action_Unchecked" />
@@ -23,8 +23,8 @@
             <Button x:Name="btn_reroll" Content="roll" Height="40" Width="38" Canvas.Left="173" Click="btn_reroll_Click"/>
 
         </Canvas>
-        <Canvas Margin="123,4,406,198">
-            <xctk:RangeSlider x:Name="years_slider" HorizontalAlignment="Left" VerticalAlignment="Top" Minimum="1950" RangeBackground="Red" Height="25" Maximum="2021" Step="1" Width="112" LowerValueChanged="years_slider_LowerValueChanged" HigherValueChanged="years_slider_HigherValueChanged" Canvas.Left="6" Canvas.Top="24"/>
+        <Canvas Margin="138,10,22,192">
+            <xctk:RangeSlider x:Name="years_slider" HorizontalAlignment="Left" VerticalAlignment="Top" Minimum="1950" RangeBackground="#FFFF00C5" Height="25" Maximum="2021" Step="1" Width="112" LowerValueChanged="years_slider_LowerValueChanged" HigherValueChanged="years_slider_HigherValueChanged" Canvas.Left="6" Canvas.Top="24"/>
             <Label x:Name="year_lower_b" Content="1950" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White"/>
             <Label x:Name="year_higher_b" Content="1950" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Canvas.Left="86" Canvas.Top="1"/>
 
