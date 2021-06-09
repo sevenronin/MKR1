@@ -59,7 +59,11 @@ namespace movieRoller
     public class MovieRoller
     {
 <<<<<<< refs/remotes/origin/mainFunctional:movieRoller/MainWindow.xaml.cs~refs/remotes/origin/mainFunctional
+<<<<<<< refs/remotes/origin/mainFunctional:movieRoller/MainWindow.xaml.cs~refs/remotes/origin/mainFunctional
         MainWindow main_Window; //aaa
+=======
+        MainWindow main_Window; //
+>>>>>>> fix:movieRoller/MainWindow.xaml.cs
 =======
         MainWindow main_Window; //
 >>>>>>> fix:movieRoller/MainWindow.xaml.cs
