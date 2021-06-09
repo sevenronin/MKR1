@@ -44,11 +44,7 @@ namespace movieRoller {
         /// InitializeComponent
         /// </summary>
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
-<<<<<<< Updated upstream:movieRoller/obj/Debug/App.g.cs
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "4.0.0.0")]
-=======
         [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "5.0.6.0")]
->>>>>>> Stashed changes:MovieFinder/obj/Debug/netcoreapp3.1/App.g.cs
         public void InitializeComponent() {
             
             #line 5 "..\..\App.xaml"
@@ -63,11 +59,8 @@ namespace movieRoller {
         /// </summary>
         [System.STAThreadAttribute()]
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
-<<<<<<< Updated upstream:movieRoller/obj/Debug/App.g.cs
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "4.0.0.0")]
-=======
+
         [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "5.0.6.0")]
->>>>>>> Stashed changes:MovieFinder/obj/Debug/netcoreapp3.1/App.g.cs
         public static void Main() {
             movieRoller.App app = new movieRoller.App();
             app.InitializeComponent();
