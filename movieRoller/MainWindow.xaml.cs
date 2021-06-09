@@ -55,17 +55,10 @@ namespace movieRoller
         Western = 37
     }
 
-    public enum ReleaseYear
-    {
-        Old,
-        New,
-        User
-    }
-
 
     public class MovieRoller
     {
-        MainWindow main_Window;
+        MainWindow main_Window; //aaa
         TMDbClient client; //клиент для работы с api
         string api_key = "ed7d16aeb09ffce311534f878ece4fb3";
         SearchMovie rolled_movie; //подобранный фильм
@@ -84,7 +77,7 @@ namespace movieRoller
             ParseGanresIDs();
         }
 
-        async public void ParseMovie(ReleaseYear release = ReleaseYear.Old, int year = 9999)
+        async public void ParseMovie()
         {
             int amnt_checking_pages = 5; //кол-во обратываеых страниц с фильмами
 
@@ -97,15 +90,7 @@ namespace movieRoller
             {
                 //await client.GetConfigAsync(); //до этого без этой функции ничего не работало, а щас работает, почему - хз
                 //chosenGanresIDs.Add(28); //для теста добавим жанр - "Action"
-                if (year != 9999)
-                {
-                    primary_year = year;
-                }
-                else if (release == ReleaseYear.Old)
-                {
-                    primary_year = new Random().Next(1950, 2000);
-                }
-                else primary_year = new Random().Next(2001, 2021);
+                primary_year = new Random().Next((int)main_Window.years_slider.LowerValue, (int)main_Window.years_slider.HigherValue);
                 SearchContainer<SearchMovie> rolled_movies = null;
                 bool rolled = false;
                 while (!rolled)
@@ -167,29 +152,25 @@ namespace movieRoller
     {
         MovieRoller roller; // сам подборщик фильмов
         GenreName chosenOtherGenre; // выбранный "другой" жанр
-        ReleaseYear release = ReleaseYear.Old; // по дефолту старое кино
-        int release_year = 0000; // год релиза if release == Release.User
         public MainWindow()
         {
             InitializeComponent();
             roller = new MovieRoller(this);
-
+            years_slider.LowerValue = years_slider.Minimum;
+            years_slider.HigherValue = years_slider.Maximum;
             foreach (GenreName genre in Enum.GetValues(typeof(GenreName)))
                 genres_list.Items.Add(genre);
 
             /*for (GenreName genre = 0; (int)genre < 18; ++genre)
                 genres_list.Items.Add(genre);*/
 
-            for (int i = 2021; i > 1949; --i)
-                years_list.Items.Add(i);
+            // years_slider.SetBinding(Xceed.Wpf.Toolkit.RangeSlider.MaximumProperty, "year_lower_b");
+
         }
 
         private void btn_roll_Click(object sender, RoutedEventArgs e)
         {
-            if (release == ReleaseYear.Old || release == ReleaseYear.New)
-                roller.ParseMovie(release);
-            else roller.ParseMovie(0, release_year);
-
+            roller.ParseMovie();
         }
 
         private void cb_comedy_Checked(object sender, RoutedEventArgs e)
@@ -262,32 +243,20 @@ namespace movieRoller
             catch (Exception) { }
         }
 
-        private void rb_old_movies_Checked(object sender, RoutedEventArgs e)
-        {
-            release = ReleaseYear.Old;
-        }
-
-        private void rb_new_movies_Checked(object sender, RoutedEventArgs e)
-        {
-            release = ReleaseYear.New;
-        }
-
-        private void rb_user_movies_Checked(object sender, RoutedEventArgs e)
-        {
-            release = ReleaseYear.User;
-            release_year = int.Parse(years_list.SelectedItem.ToString());
-        }
-
-        private void years_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            release_year = int.Parse(years_list.SelectedItem.ToString());
-        }
 
         private void btn_reroll_Click(object sender, RoutedEventArgs e)
         {
-            if (release == ReleaseYear.Old || release == ReleaseYear.New)
-                roller.ParseMovie(release);
-            else roller.ParseMovie(0, release_year);
+            roller.ParseMovie();
+        }
+
+        private void years_slider_LowerValueChanged(object sender, RoutedEventArgs e)
+        {
+            year_lower_b.Content = ((int)years_slider.LowerValue).ToString();
+        }
+
+        private void years_slider_HigherValueChanged(object sender, RoutedEventArgs e)
+        {
+            year_higher_b.Content = ((int)years_slider.HigherValue).ToString();
         }
     }
 }
