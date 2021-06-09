@@ -58,7 +58,7 @@ namespace movieRoller
 
     public class MovieRoller
     {
-        MainWindow main_Window; //
+        MainWindow main_Window; //aaa
         TMDbClient client; //клиент для работы с api
         string api_key = "ed7d16aeb09ffce311534f878ece4fb3";
         SearchMovie rolled_movie; //подобранный фильм
