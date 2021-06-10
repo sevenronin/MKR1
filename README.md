@@ -13,5 +13,4 @@ Board [**Trello**](https://trello.com/b/Saox1goj/mkr1)</br>
 - Polygalov Vladimir - `Architect + Developer`</br>
 - Plakhina Tatiana - `Developer`</br>
 - Timiskova Anna - `QA (Tester)`</br>
-- Soboleva Daria - `Developer`</br>
-
+- Soboleva Darya - `Developer`</br>
