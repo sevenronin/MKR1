@@ -17,10 +17,10 @@
         </Style>
         <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
         <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
-        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFA061EA"/>
-        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FFA061EA"/>
-        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#6c3ca6"/>
-        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#6c3ca6"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFf74d61"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FFf74d61"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#ab3a47"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#ab3a47"/>
         <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
         <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
         <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
@@ -43,7 +43,7 @@
                             <Trigger Property="IsEnabled" Value="true">
                                 <Setter Property="Effect">
                                     <Setter.Value>
-                                        <DropShadowEffect Opacity="0.4" ShadowDepth="0" Color="MediumPurple" BlurRadius="35"/>
+                                        <DropShadowEffect Opacity="0.4" ShadowDepth="0" Color="#FFf74d61" BlurRadius="35"/>
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
