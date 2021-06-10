@@ -1,6 +1,6 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/csharp,windows
-# Edit at https://www.toptal.com/developers/gitignore?templates=csharp,windows
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudio
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudio
 
 ### Csharp ###
 ## Ignore Visual Studio temporary files, build results, and
@@ -364,6 +364,10 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+### VisualStudio Patch ###
+# Additional files built by Visual Studio
+*.tlog
 
 ### Windows ###
 # Windows thumbnail cache files
