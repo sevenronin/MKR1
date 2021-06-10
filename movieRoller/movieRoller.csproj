@@ -143,25 +143,22 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="loading.gif" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="reload.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="search.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="loading_1.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="loading_anim.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="loading_2.gif" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="loading_3.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="фвфв.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="noise.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="emoji.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

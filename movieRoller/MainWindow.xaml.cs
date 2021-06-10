@@ -248,12 +248,14 @@ namespace movieRoller
 
         private void cb_other_Checked(object sender, RoutedEventArgs e)
         {
+            genres_list.IsEnabled = true;
             chosenOtherGenre = (GenreName)Enum.Parse(typeof(GenreName), genres_list.Text);
             roller.AddRemoveGenre(chosenOtherGenre);
         }
 
         private void cb_other_Unchecked(object sender, RoutedEventArgs e)
         {
+            genres_list.IsEnabled = false;
             try
             {
                 roller.AddRemoveGenre(chosenOtherGenre, true);
@@ -263,17 +265,14 @@ namespace movieRoller
 
         private void genres_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
-            {
-                //будем измегнять спиоск жанров на подбор только если "другое" активировано
-                if (cb_other.IsChecked == true)
+            if(cb_other.IsChecked == true)
+                try
                 {
                     roller.AddRemoveGenre(chosenOtherGenre, true);
-                    chosenOtherGenre = (GenreName)Enum.Parse(typeof(GenreName), genres_list.Text);
+                    chosenOtherGenre = (GenreName)Enum.Parse(typeof(GenreName), e.AddedItems[0].ToString());
                     roller.AddRemoveGenre(chosenOtherGenre);
                 }
-            }
-            catch (Exception) { }
+                catch (Exception) { }
         }
 
 
