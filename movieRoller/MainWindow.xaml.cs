@@ -93,8 +93,13 @@ namespace movieRoller
                 primary_year = new Random().Next((int)main_Window.years_slider.LowerValue, (int)main_Window.years_slider.HigherValue);
                 SearchContainer<SearchMovie> rolled_movies = null;
                 bool rolled = false;
-                while (!rolled)
+                int amnt_tries = 0;
+                main_Window.btn_roll.IsEnabled = false;
+                main_Window.loading_background.Visibility = Visibility.Visible;
+                main_Window.loading_animation.Visibility = Visibility.Visible;
+                while (!rolled && amnt_tries < 31)
                 {
+                    amnt_tries++;
                     try
                     {
                         rolled_movies = await client.
@@ -107,11 +112,35 @@ namespace movieRoller
                     }
                     catch (Exception) { }
                 }
+                if (amnt_tries == 30 && !rolled)
+                    MessageBox.Show("Произошла ошибка!\nПопробуйте нажать на кнопку снова.", "Ошибка");
 
                 if (rolled)
                 {
+                    main_Window.loading_background.Visibility = Visibility.Hidden;
+                    main_Window.loading_animation.Visibility = Visibility.Hidden;
+                    string overview = "";
                     rolled_movie = rolled_movies.Results[new Random().Next(0, rolled_movies.Results.Count() - 1)];
                     main_Window.txt_rolled_movie.Text = rolled_movie.Title;
+                    overview = rolled_movie.Overview;
+                    int words_in_str = 0;
+                    if (overview.Length < 10)
+                        overview = "Описание отсутствует";
+                    else
+                        for(int i=0; i<overview.Length; ++i)
+                        {
+                            if (overview[i] == ' ')
+                            {
+                                if (words_in_str == 10)
+                                {
+                                    overview = overview.Insert(i, "\n");
+                                    words_in_str = 0;
+                                }
+                                else words_in_str++;
+                            }
+                        
+                        }
+                    main_Window.txt_rolled_movie.ToolTip = overview;
 
                     if (main_Window.txt_rolled_movie.Text.Length > 1)
                     {
@@ -120,6 +149,10 @@ namespace movieRoller
                     }
                 }
             }
+        }
+        public string rolledMovie
+        {
+            get { return rolled_movie.Title; }
         }
 
         void ParseGanresIDs()
@@ -257,6 +290,21 @@ namespace movieRoller
         private void years_slider_HigherValueChanged(object sender, RoutedEventArgs e)
         {
             year_higher_b.Content = ((int)years_slider.HigherValue).ToString();
+        }
+
+        private void reroll_image_MouseEnter(object sender, MouseEventArgs e)
+        {
+            btn_reroll.Focus();
+        }
+
+        private void reroll_image_MouseLeave(object sender, MouseEventArgs e)
+        {
+            btn_reroll.Focus();
+        }
+
+        private void btn_search_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://yandex.ru/search/?lr=213&text=" + Uri.EscapeUriString(roller.rolledMovie));
         }
     }
 }
