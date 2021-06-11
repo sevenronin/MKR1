@@ -8,9 +8,9 @@ by genre or by year, if you can't decide what to watch</br>
 Board [**Trello**](https://trello.com/b/Saox1goj/mkr1)</br>
 ## Participants:</br>
 - Buzmakov Ivan - `Project Manager`</br>
-- Kondratenkov Valeriy - `Release Manager` </br>
-- Kuzminykh Ulyana - `Business analyst (product manager)`</br>
+- Kondratenkov Valeriy - `Developer` </br>
+- Kuzminykh Ulyana - `Release Manager`</br>
 - Polygalov Vladimir - `Architect + Developer`</br>
 - Plakhina Tatiana - `Developer`</br>
-- Timiskova Anna - `QA (Tester)`</br>
-- Soboleva Darya - `Developer`</br>
+- Timiskova Anna - `Business analyst`</br>
+- Soboleva Darya - `QA (Tester)`</br>
