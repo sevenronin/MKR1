@@ -15,7 +15,7 @@
 
 
 
-        <Image IsHitTestVisible="False" Margin="-271,-5,-320,-6" Source="фвфв.png" Stretch="Fill"/>
+        <Image IsHitTestVisible="False" Margin="-300,-5,-291,-6" Source="фвфв.png" Stretch="Fill"/>
 
 
 
@@ -74,6 +74,9 @@
         </Canvas>
         <Canvas Margin="192,127,75,166">
             <xctk:RangeSlider x:Name="years_slider" HorizontalAlignment="Left" VerticalAlignment="Top" Minimum="1950" RangeBackground="#FFE66A79" Height="25" Maximum="2021" Step="1" Width="127" LowerValueChanged="years_slider_LowerValueChanged" HigherValueChanged="years_slider_HigherValueChanged" Canvas.Left="6" Canvas.Top="24" BorderBrush="White" BorderThickness="0" HigherRangeBackground="{x:Null}">
+                <xctk:RangeSlider.Effect>
+                    <DropShadowEffect Direction="0" BlurRadius="40" ShadowDepth="0" Color="#FFE66A79" Opacity="0.7"/>
+                </xctk:RangeSlider.Effect>
                 <xctk:RangeSlider.ToolTip>
                     <ToolTip Width="150" Height="25">
                         <StackPanel>
@@ -87,9 +90,6 @@
         </Canvas>
         <TextBlock HorizontalAlignment="Left" Height="79" Margin="197,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" Foreground="#FFE66A79" FontFamily="Montserrat SemiBold" FontSize="10"><Run Text="Не можешь найти"/><Run Text=" фильм для просмотра"/><Run Text="? "/><LineBreak/><Run/><LineBreak/><Run Text="Я помогу"/>
         </TextBlock>
-        <Rectangle x:Name="loading_background" Fill="#FF1D1B21" HorizontalAlignment="Left" Height="365" Margin="-15,-10,-14,-12" RadiusY="20" RadiusX="20" VerticalAlignment="Top" Width="425" Opacity="0.8" Visibility="Hidden"/>
-        <Image x:Name="loading_animation" gif:ImageBehavior.RepeatBehavior="100x"
-            gif:ImageBehavior.AnimatedSource="loading_3.gif" Margin="106,92" Visibility="Hidden" />
         <Image Source="emoji.png" Stretch="Fill" Margin="246,81,90,201" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
@@ -103,6 +103,9 @@
                 <DropShadowEffect Opacity="0.4" ShadowDepth="0" Color="#FFf74d61" BlurRadius="35"/>
             </Image.Effect>
         </Image>
+        <Rectangle x:Name="loading_background" Fill="#FF1D1B21" HorizontalAlignment="Left" Height="365" Margin="-15,-10,-14,-12" RadiusY="20" RadiusX="20" VerticalAlignment="Top" Width="425" Opacity="0.8" Visibility="Hidden"/>
+        <Image x:Name="loading_animation" gif:ImageBehavior.RepeatBehavior="10000x"
+            gif:ImageBehavior.AnimatedSource="loading_3.gif" Margin="106,92" Visibility="Hidden" />
         <Image IsHitTestVisible="False" Margin="-280,-255,-246,-324" Source="noise.png" Stretch="Fill" Opacity="0.02" d:IsHidden="True"/>
     </Grid>
 
