@@ -23,7 +23,6 @@ namespace movieRoller
         {
             InitializeComponent();
             roller = new Roller.MovieRoller();
-
             fill_genres_list();
 
             years_slider.LowerValue = years_slider.Minimum;
@@ -46,49 +45,57 @@ namespace movieRoller
             loading_animation.Visibility = Visibility.Visible;
 
             await roller.ParseMovie(year_l_border, year_r_border, checking_pages); //вернет фильм, информацию о котром я выведу на экран
-            rolled_movie = roller.return_movie();
-            
-            if (rolled_movie == null)
+            if (!roller.check_internet())
             {
+                MessageBox.Show("Нет доступа к интернету!", "Ошибка");
                 loading_background.Visibility = Visibility.Hidden;
                 loading_animation.Visibility = Visibility.Hidden;
-                
-
-                MessageBox.Show("Выберите хотя бы один жанр!");
+                return;
             }
             else
             {
+                rolled_movie = roller.return_movie();
+
                 loading_background.Visibility = Visibility.Hidden;
                 loading_animation.Visibility = Visibility.Hidden;
-                //string overview = "";
-                txt_rolled_movie.Text = rolled_movie.Title;
-                
-                //overview = rolled_movie.Overview;
-                /*int words_in_str = 0;
-                if (overview.Length < 10)
-                    overview = "Описание отсутствует";
-                else
-                    for (int i = 0; i < overview.Length; ++i)
-                    {
-                        if (overview[i] == ' ')
-                        {
-                            if (words_in_str == 10)
-                            {
-                                overview = overview.Insert(i, "\n");
-                                words_in_str = 0;
-                            }
-                            else words_in_str++;
-                        }
 
-                    }
-                main_Window.txt_rolled_movie.ToolTip = overview;*/
-
-                if (txt_rolled_movie.Text.Length > 1)
+                if (rolled_movie == null)
                 {
-                    btn_roll.Visibility = Visibility.Hidden; //если нажали кнопку рола фильма и рол был успешен, скроем кнопку
-                    rolled_movie_canvas.Visibility = Visibility.Visible;
+                    MessageBox.Show("Выберите хотя бы один жанр!");
+                }
+                else
+                {
+                    //string overview = "";
+                    txt_rolled_movie.Text = rolled_movie.Title;
+
+                    //overview = rolled_movie.Overview;
+                    /*int words_in_str = 0;
+                    if (overview.Length < 10)
+                        overview = "Описание отсутствует";
+                    else
+                        for (int i = 0; i < overview.Length; ++i)
+                        {
+                            if (overview[i] == ' ')
+                            {
+                                if (words_in_str == 10)
+                                {
+                                    overview = overview.Insert(i, "\n");
+                                    words_in_str = 0;
+                                }
+                                else words_in_str++;
+                            }
+
+                        }
+                    main_Window.txt_rolled_movie.ToolTip = overview;*/
+
+                    if (txt_rolled_movie.Text.Length > 1)
+                    {
+                        btn_roll.Visibility = Visibility.Hidden; //если нажали кнопку рола фильма и рол был успешен, скроем кнопку
+                        rolled_movie_canvas.Visibility = Visibility.Visible;
+                    }
                 }
             }
+
         }
 
         private void btn_roll_Click(object sender, RoutedEventArgs e)
