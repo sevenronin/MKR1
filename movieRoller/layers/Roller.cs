@@ -12,15 +12,20 @@ namespace Roller
         int primary_year = 2020;
         List<int> chosenGenresIDs = new List<int>(); //добавление/удаление жанра = select/unselect чекбокса у жанра
         Dictionary<Genres.Title, int> GenresIDs = new Dictionary<Genres.Title, int>(); //список жанров с их ID   
-
         List<Genres.Title> genres = new List<Genres.Title>();
-
         TMDbApi.TMDbApi client = new TMDbApi.TMDbApi();
+        
+        bool have_internet = true;
 
         public MovieRoller()
         {
             client.Connect();
             ParseGenresIDs();
+        }
+
+        public bool check_internet()
+        {
+            return have_internet;
         }
 
         public SearchMovie return_movie()
@@ -30,6 +35,14 @@ namespace Roller
 
         public async Task ParseMovie(int year_l_border, int year_r_border, int amnt_pages)
         {
+            if (chosenGenresIDs.Count == 0)
+            {
+                rolled_movie = null;
+                return;
+            }
+            check_internet();
+            if (!have_internet)
+                return;
             primary_year = new Random().Next(year_l_border, year_r_border);
             await client.api_ParseMovie(chosenGenresIDs, primary_year, amnt_pages);
             rolled_movie = client.return_movie(chosenGenresIDs);
