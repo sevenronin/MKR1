@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Shapes;
 using TMDbLib.Objects.Search;
-
+using System.Windows.Media.Animation;
 namespace movieRoller
 {
-
-   
     public partial class MainWindow : Window
     {
         SearchMovie rolled_movie;
@@ -31,7 +30,7 @@ namespace movieRoller
 
         private void fill_genres_list()
         {
-            foreach (Genres.Title genre in Enum.GetValues(typeof(Genres.Title)))
+            foreach (Genres.RuTitle genre in Enum.GetValues(typeof(Genres.RuTitle)))
                 genres_list.Items.Add(genre);
         }
 
@@ -43,8 +42,12 @@ namespace movieRoller
 
             loading_background.Visibility = Visibility.Visible;
             loading_animation.Visibility = Visibility.Visible;
+            try
+            {
+                await roller.ParseMovie(year_l_border, year_r_border, checking_pages); //вернет фильм, информацию о котром я выведу на экран
+            }
+            catch (Exception) { };
 
-            await roller.ParseMovie(year_l_border, year_r_border, checking_pages); //вернет фильм, информацию о котром я выведу на экран
             if (!roller.check_internet())
             {
                 MessageBox.Show("Нет доступа к интернету!", "Ошибка");
@@ -67,7 +70,9 @@ namespace movieRoller
                 {
                     //string overview = "";
                     txt_rolled_movie.Text = rolled_movie.Title;
-
+                    btn_movie_info.IsEnabled = true;
+                    btn_history.IsEnabled = true;
+                    btn_search.IsEnabled = true;
                     //overview = rolled_movie.Overview;
                     /*int words_in_str = 0;
                     if (overview.Length < 10)
@@ -144,10 +149,34 @@ namespace movieRoller
             roller.AddRemoveGenre(Genres.Title.Horror);
         }
 
+        private string fromRuToEnGenre(string ru_genre)
+        {
+            //нужно найти название жанра на английском по айдишнику жанра на русском
+            string en_genre = "";
+            int id=0;
+
+            if (ru_genre.Length > 2)
+            {
+                var ru_genres = Enum.GetValues(typeof(Genres.RuTitle));
+                for(int i=0; i<ru_genres.Length; ++i)
+                {
+                    string a = ru_genres.GetValue(i).ToString();
+                    if (ru_genres.GetValue(i).ToString() == ru_genre)
+                    {
+                        id = i;
+                        break;
+                    }
+                }
+                
+            }
+            en_genre = Enum.GetNames(typeof(Genres.Title))[id].ToString(); //получаем жанр на английском языке
+            return en_genre;
+        }
+
         private void cb_other_Checked(object sender, RoutedEventArgs e)
         {
             genres_list.IsEnabled = true;
-            chosenOtherGenre = (Genres.Title)Enum.Parse(typeof(Genres.Title), genres_list.Text);
+            chosenOtherGenre = (Genres.Title)Enum.Parse(typeof(Genres.Title), fromRuToEnGenre(genres_list.Text));
             roller.AddRemoveGenre(chosenOtherGenre);
         }
 
@@ -167,16 +196,10 @@ namespace movieRoller
                 try
                 {
                     roller.AddRemoveGenre(chosenOtherGenre, true);
-                    chosenOtherGenre = (Genres.Title)Enum.Parse(typeof(Genres.Title), e.AddedItems[0].ToString());
+                    chosenOtherGenre = (Genres.Title)Enum.Parse(typeof(Genres.Title), fromRuToEnGenre(e.AddedItems[0].ToString()));
                     roller.AddRemoveGenre(chosenOtherGenre);
                 }
                 catch (Exception) { }
-        }
-
-
-        private void btn_reroll_Click(object sender, RoutedEventArgs e)
-        {
-            roll_click();
         }
 
         private void years_slider_LowerValueChanged(object sender, RoutedEventArgs e)
@@ -197,6 +220,27 @@ namespace movieRoller
         private void reroll_image_MouseLeave(object sender, MouseEventArgs e)
         {
             btn_reroll.Focus();
+        }
+
+        private void info_close_Click(object sender, RoutedEventArgs e)
+        {
+            canvas_info.Visibility = Visibility.Hidden;
+            loading_background.Visibility = Visibility.Hidden;
+        }
+
+        private void btn_movie_info_Click(object sender, RoutedEventArgs e)
+        {
+            info_genres.Clear();
+            canvas_info.Visibility = Visibility.Visible;
+            loading_background.Visibility = Visibility.Visible;
+            info_title.Content = rolled_movie.Title;
+            info_amnt_votes.Content = rolled_movie.VoteCount;
+            info_rating.Content = rolled_movie.VoteAverage;
+            for(int genre = 0; genre < rolled_movie.GenreIds.Count; ++genre)
+            {
+                info_genres.Text += Enum.GetName(typeof(Genres.RuTitle), rolled_movie.GenreIds[genre]);
+                if (genre != rolled_movie.GenreIds.Count - 1) info_genres.Text += ", ";
+            }
         }
 
         private void btn_search_Click(object sender, RoutedEventArgs e)

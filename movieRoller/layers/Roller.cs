@@ -15,7 +15,7 @@ namespace Roller
         List<Genres.Title> genres = new List<Genres.Title>();
         TMDbApi.TMDbApi client = new TMDbApi.TMDbApi();
         
-        bool have_internet = false;
+        bool have_internet = true;
 
         public MovieRoller()
         {
@@ -35,6 +35,11 @@ namespace Roller
 
         public async Task ParseMovie(int year_l_border, int year_r_border, int amnt_pages)
         {
+            if (chosenGenresIDs.Count == 0)
+            {
+                rolled_movie = null;
+                return;
+            }
             check_internet();
             if (!have_internet)
                 return;
