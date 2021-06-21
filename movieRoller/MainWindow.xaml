@@ -43,6 +43,7 @@
             <CheckBox x:Name="cb_horror" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Content="Ужасы" Foreground="White" Unchecked="cb_horror_Unchecked" Checked="cb_horror_Checked" FontFamily="Montserrat SemiBold" FontSize="16" Style="{DynamicResource CheckBoxStyle}" Canvas.Top="93" />
             <ComboBox x:Name="genres_list" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" SelectionChanged="genres_list_SelectionChanged" SelectedIndex="0" FontFamily="Montserrat SemiBold" BorderBrush="Transparent" Background="White" VerticalContentAlignment="Center" Style="{DynamicResource ComboBoxStyle}" Height="26" Canvas.Left="22" Canvas.Top="122" IsEnabled="False"/>
             <CheckBox x:Name="cb_other" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="19" Content="" Foreground="White" Checked="cb_other_Checked" Unchecked="cb_other_Unchecked" FontFamily="Montserrat SemiBold" FontSize="16" Style="{DynamicResource CheckBoxStyle}" Canvas.Top="124" />
+            <CheckBox x:Name="cb_age" Content="Исключить 21+" Canvas.Left="134" Canvas.Top="127" Height="21" Style="{DynamicResource CheckBoxStyle}" FontFamily="Montserrat SemiBold" FontSize="16" Foreground="White"/>
         </Canvas>
         <Canvas x:Name="rolled_movie_canvas" HorizontalAlignment="Center" VerticalAlignment="Center" Width="302" Height="174" Margin="46,235,46,31">
 

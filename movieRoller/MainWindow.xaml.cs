@@ -44,7 +44,8 @@ namespace movieRoller
             loading_animation.Visibility = Visibility.Visible;
             try
             {
-                await roller.ParseMovie(year_l_border, year_r_border, checking_pages); //вернет фильм, информацию о котром я выведу на экран
+                if(cb_age.IsChecked == true) await roller.ParseMovie(year_l_border, year_r_border, checking_pages, false); //вернет фильм с ограничением до 18, информацию о котром я выведу на экран
+                else await roller.ParseMovie(year_l_border, year_r_border, checking_pages, true); //вернет фильм без ограничения по возрасту, информацию о котром я выведу на экран
             }
             catch (Exception) { };
 

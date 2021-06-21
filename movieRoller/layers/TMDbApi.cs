@@ -22,12 +22,13 @@ namespace TMDbApi
             client.DefaultLanguage = "ru";
         }
         
-        async public Task api_ParseMovie(List<int> genresIDs, int primary_year, int amnt_pages)
+        async public Task api_ParseMovie(List<int> genresIDs, int primary_year, int amnt_pages, bool age_flag)
         {
             try
             {
                 rolled_movies = await client.
                        DiscoverMoviesAsync().
+                       IncludeAdultMovies(age_flag).
                        IncludeWithAnyOfGenre(genresIDs).
                        OrderBy(DiscoverMovieSortBy.PopularityDesc).
                        WherePrimaryReleaseIsInYear(primary_year).
