@@ -246,7 +246,7 @@ namespace movieRoller
 
         private void btn_search_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://yandex.ru/search/?lr=213&text=" + Uri.EscapeUriString(roller.rolledMovie));
+            System.Diagnostics.Process.Start("https://yandex.ru/search/?lr=213&text=фильм " + Uri.EscapeUriString(roller.rolledMovie));
         }
     }
 }
