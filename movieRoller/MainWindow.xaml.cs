@@ -23,6 +23,7 @@ namespace movieRoller
             InitializeComponent();
             roller = new Roller.MovieRoller();
             fill_genres_list();
+            fill_set_to_find(); //заполнить выбор настроек
 
             years_slider.LowerValue = years_slider.Minimum;
             years_slider.HigherValue = years_slider.Maximum;
@@ -38,13 +39,17 @@ namespace movieRoller
         async public void roll_click()
         {
             year_l_border = int.Parse(year_lower_b.Content.ToString());
-            year_r_border = int.Parse(year_higher_b.Content.ToString());
+            year_r_border = int.Parse(year_higher_b.Text.ToString());
 
             loading_background.Visibility = Visibility.Visible;
             loading_animation.Visibility = Visibility.Visible;
+
+            bool all_genres;
+            if (Convert.ToString(set_to_find.SelectedItem) == "Хотя бы один") all_genres = false;
+            else all_genres = true;
             try
             {
-                await roller.ParseMovie(year_l_border, year_r_border, checking_pages); //вернет фильм, информацию о котром я выведу на экран
+                await roller.ParseMovie(year_l_border, year_r_border, checking_pages, all_genres); //вернет фильм, информацию о котром я выведу на экран
             }
             catch (Exception) { };
 
@@ -209,7 +214,7 @@ namespace movieRoller
 
         private void years_slider_HigherValueChanged(object sender, RoutedEventArgs e)
         {
-            year_higher_b.Content = ((int)years_slider.HigherValue).ToString();
+            year_higher_b.Text = ((int)years_slider.HigherValue).ToString();
         }
 
         private void reroll_image_MouseEnter(object sender, MouseEventArgs e)
@@ -243,9 +248,38 @@ namespace movieRoller
             }
         }
 
+       
+        private void year_higher_b_KeyUp(object sender, KeyEventArgs e)
+        {
+            char a = (char)e.Key;
+        }
+
         private void btn_search_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://yandex.ru/search/?lr=213&text=" + Uri.EscapeUriString(roller.rolledMovie));
+        }
+
+        private void set_to_find_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void year_higher_b_KeyDown(object sender, KeyEventArgs e)
+        {
+            char a = (char)e.Key;
+        }
+
+        private void year_higher_b_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (year_higher_b.Text != "") Console.WriteLine("1");
+        }
+
+        //настройка подбора по жанрам
+        private void fill_set_to_find()
+        {
+            set_to_find.Items.Add("Хотя бы один");
+            set_to_find.Items.Add("Как можно больше");
+            
         }
     }
 }

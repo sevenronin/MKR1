@@ -41,7 +41,7 @@ namespace Roller
             return rolled_movie;
         }
 
-        public async Task ParseMovie(int year_l_border, int year_r_border, int amnt_pages)
+        public async Task ParseMovie(int year_l_border, int year_r_border, int amnt_pages, bool all_genres)
         {
             if (chosenGenresIDs.Count == 0)
             {
@@ -52,7 +52,8 @@ namespace Roller
             if (!have_internet)
                 return;
             primary_year = new Random().Next(year_l_border, year_r_border);
-            await client.api_ParseMovie(chosenGenresIDs, primary_year, amnt_pages);
+            
+            await client.api_ParseMovie(chosenGenresIDs, primary_year, amnt_pages, all_genres);
             rolled_movie = client.return_movie(chosenGenresIDs);
         }
 
