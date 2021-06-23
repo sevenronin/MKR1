@@ -26,18 +26,22 @@ namespace TMDbApi
         {
             try
             {
-                if(!all_genres)
-                rolled_movies = await client.
-                       DiscoverMoviesAsync().
-                       IncludeWithAnyOfGenre(genresIDs).
-                       OrderBy(DiscoverMovieSortBy.PopularityDesc).
-                       WherePrimaryReleaseIsInYear(primary_year).
-                       Query(new Random().Next(1, amnt_pages));
+                if (!all_genres)
+                    rolled_movies = await client.
+                           DiscoverMoviesAsync().
+                           IncludeWithAnyOfGenre(genresIDs).
+                           OrderBy(DiscoverMovieSortBy.PopularityDesc).
+                           WherePrimaryReleaseIsInYear(primary_year).
+                           WhereReleaseDateIsBefore(DateTime.Now).   //До сегодня
+                           WhereReleaseDateIsInRegion("RU").   //в России
+                           Query(new Random().Next(1, amnt_pages));
                 else rolled_movies = await client.
                      DiscoverMoviesAsync().
                      IncludeWithAllOfGenre(genresIDs).
                      OrderBy(DiscoverMovieSortBy.PopularityDesc).
                      WherePrimaryReleaseIsInYear(primary_year).
+                     WhereReleaseDateIsBefore(DateTime.Now).   //До сегодня
+                     WhereReleaseDateIsInRegion("RU").      //в России
                      Query(new Random().Next(1, amnt_pages));
             }
             catch (Exception) { }

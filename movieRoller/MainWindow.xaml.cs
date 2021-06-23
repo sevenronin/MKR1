@@ -259,14 +259,7 @@ namespace movieRoller
             System.Diagnostics.Process.Start("https://yandex.ru/search/?lr=213&text=" + Uri.EscapeUriString(roller.rolledMovie));
         }
 
-        private void year_higher_b_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if(year_higher_b.Text!="")
-            {
-                
-            }
-        }
-
+        
         private void year_higher_b_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)  //реагирование на изменение верхней границы
         {
             //Console.WriteLine("1");
@@ -294,8 +287,7 @@ namespace movieRoller
         private void fill_set_to_find()
         {
             set_to_find.Items.Add("Хотя бы один");
-            set_to_find.Items.Add("Как можно больше");
-            
+            set_to_find.Items.Add("Как можно больше");            
         }
     }
 }

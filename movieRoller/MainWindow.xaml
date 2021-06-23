@@ -145,9 +145,9 @@
             <Label x:Name="info_amnt_votes" Content="" Canvas.Left="131" Canvas.Top="72" Width="110" FontFamily="Montserrat SemiBold" Background="{x:Null}" Foreground="White" VerticalContentAlignment="Center"/>
         </Canvas>
         <Image IsHitTestVisible="False" Margin="-280,-255,-246,-324" Source="noise.png" Opacity="0.02" d:IsHidden="True"/>
-        <TextBox x:Name="year_higher_b" HorizontalAlignment="Left" Height="21" Margin="288,129,0,0" TextWrapping="Wrap" Text="2021" VerticalAlignment="Top" Width="36" SelectionOpacity="4" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" TextChanged="year_higher_b_TextChanged" LostKeyboardFocus="year_higher_b_LostKeyboardFocus"/>
+        <TextBox x:Name="year_higher_b" HorizontalAlignment="Left" Height="21" Margin="288,129,0,0" TextWrapping="Wrap" Text="2021" VerticalAlignment="Top" Width="36" SelectionOpacity="4" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" LostKeyboardFocus="year_higher_b_LostKeyboardFocus"/>
         <ComboBox x:Name="set_to_find" HorizontalAlignment="Left" Margin="27,36,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0"/>
-        <TextBox x:Name="year_lower_b" HorizontalAlignment="Left" Height="21" Margin="197,129,0,0" TextWrapping="Wrap" Text="1950" VerticalAlignment="Top" Width="36" SelectionOpacity="4" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" TextChanged="year_higher_b_TextChanged" LostKeyboardFocus="year_lower_b_LostKeyboardFocus"/>
+        <TextBox x:Name="year_lower_b" HorizontalAlignment="Left" Height="21" Margin="197,129,0,0" TextWrapping="Wrap" Text="1950" VerticalAlignment="Top" Width="36" SelectionOpacity="4" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" LostKeyboardFocus="year_lower_b_LostKeyboardFocus"/>
     </Grid>
 
 </Window>
