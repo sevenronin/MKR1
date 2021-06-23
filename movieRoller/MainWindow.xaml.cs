@@ -38,7 +38,7 @@ namespace movieRoller
 
         async public void roll_click()
         {
-            year_l_border = int.Parse(year_lower_b.Content.ToString());
+            year_l_border = int.Parse(year_lower_b.Text.ToString());
             year_r_border = int.Parse(year_higher_b.Text.ToString());
 
             loading_background.Visibility = Visibility.Visible;
@@ -209,7 +209,7 @@ namespace movieRoller
 
         private void years_slider_LowerValueChanged(object sender, RoutedEventArgs e)
         {
-            year_lower_b.Content = ((int)years_slider.LowerValue).ToString();
+            year_lower_b.Text = ((int)years_slider.LowerValue).ToString();
         }
 
         private void years_slider_HigherValueChanged(object sender, RoutedEventArgs e)
@@ -259,20 +259,36 @@ namespace movieRoller
             System.Diagnostics.Process.Start("https://yandex.ru/search/?lr=213&text=" + Uri.EscapeUriString(roller.rolledMovie));
         }
 
-        private void set_to_find_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void year_higher_b_KeyDown(object sender, KeyEventArgs e)
-        {
-            char a = (char)e.Key;
-        }
-
         private void year_higher_b_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (year_higher_b.Text != "") Console.WriteLine("1");
+            if(year_higher_b.Text!="")
+            {
+                
+            }
         }
+
+        private void year_higher_b_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)  //реагирование на изменение верхней границы
+        {
+            //Console.WriteLine("1");
+            if (year_higher_b.Text == "") year_higher_b.Text = Convert.ToString(years_slider.Maximum);
+            if (Convert.ToInt32(year_higher_b.Text) > Convert.ToInt32(DateTime.Now.Year))  
+                year_higher_b.Text = Convert.ToString(DateTime.Now.Year);
+            if (Convert.ToInt32(year_higher_b.Text) < Convert.ToInt32(year_lower_b.Text))
+                year_higher_b.Text = Convert.ToString(Convert.ToInt32(year_lower_b.Text)+1);
+            years_slider.HigherValue = Convert.ToInt32(year_higher_b.Text);   
+        }
+
+        private void year_lower_b_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)  //реагирвоание на изменение нижней границы
+        {
+            if (year_lower_b.Text == "") year_lower_b.Text = Convert.ToString(years_slider.Minimum);
+            if (Convert.ToInt32(year_lower_b.Text) < years_slider.Minimum)
+                year_lower_b.Text = Convert.ToString(years_slider.Minimum);
+            if (Convert.ToInt32(year_higher_b.Text) < Convert.ToInt32(year_lower_b.Text))
+                year_lower_b.Text = Convert.ToString(Convert.ToInt32(year_higher_b.Text) - 1);
+            years_slider.LowerValue = Convert.ToInt32(year_lower_b.Text);  
+        }
+
+
 
         //настройка подбора по жанрам
         private void fill_set_to_find()
