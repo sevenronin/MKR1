@@ -21,17 +21,21 @@ namespace TMDbApi
             client = new TMDbClient(api_key);
             client.DefaultLanguage = "ru";
         }
-        
-        async public Task api_ParseMovie(List<int> genresIDs, int primary_year, int amnt_pages)
+  
+        async public Task api_ParseMovie(List<int> genresIDs, int primary_year, int amnt_pages, bool all_genres, bool age_flag)
         {
             try
             {
-                rolled_movies = await client.
-                       DiscoverMoviesAsync().
-                       IncludeWithAnyOfGenre(genresIDs).
-                       OrderBy(DiscoverMovieSortBy.PopularityDesc).
-                       WherePrimaryReleaseIsInYear(primary_year).
-                       Query(new Random().Next(1, amnt_pages));
+                var request = client.
+                           DiscoverMoviesAsync().
+                           IncludeAdultMovies(age_flag).
+                           OrderBy(DiscoverMovieSortBy.PopularityDesc).
+                           WherePrimaryReleaseIsInYear(primary_year).
+                           WhereReleaseDateIsBefore(DateTime.Now).   //До сегодня
+                           WhereReleaseDateIsInRegion("RU");   //в России
+                if (!all_genres) request = request.IncludeWithAnyOfGenre(genresIDs);
+                else request = request.IncludeWithAllOfGenre(genresIDs);
+                rolled_movies = await request.Query(new Random().Next(1, amnt_pages));
             }
             catch (Exception) { }
         }
@@ -40,7 +44,6 @@ namespace TMDbApi
         {
             if (genresIDs.Count == 0)
                 return null;
-
             rolled_movie = rolled_movies.Results[new Random().Next(0, rolled_movies.Results.Count() - 1)];
             return rolled_movie;
         }
