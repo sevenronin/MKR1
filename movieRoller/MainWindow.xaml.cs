@@ -13,7 +13,8 @@ namespace movieRoller
         SearchMovie rolled_movie;
         Roller.MovieRoller roller; // сам подборщик фильмов
         Genres.Title chosenOtherGenre; // выбранный "другой" жанр
-        List<int>GenresIDs = new List<int>();
+        List<int> GenresIDs = new List<int>();
+        List<string> history = new List<string>();  //список для истории найденных фильмов
 
         int year_l_border, year_r_border;
         int checking_pages = 3;
@@ -35,6 +36,12 @@ namespace movieRoller
                 genres_list.Items.Add(genre);
         }
 
+        //настройка подбора по жанрам
+        private void fill_set_to_find()
+        {
+            set_to_find.Items.Add("Хотя бы один");
+            set_to_find.Items.Add("Как можно больше");
+        }
 
         async public void roll_click()
         {
@@ -49,7 +56,13 @@ namespace movieRoller
             else all_genres = true;
             try
             {
-                await roller.ParseMovie(year_l_border, year_r_border, checking_pages, all_genres); //вернет фильм, информацию о котром я выведу на экран
+                if (cb_age.IsChecked == true) await roller.ParseMovie(year_l_border, year_r_border, checking_pages, all_genres, false); //вернет фильм с ограничением до 18, информацию о котром я выведу на экран
+                else await roller.ParseMovie(year_l_border, year_r_border, checking_pages, all_genres, true); //вернет фильм без ограничения по возрасту, информацию о котром я выведу на экран
+                if (roller.return_movie() != null)
+                {
+                    if (history.Count > 9) history.RemoveAt(0);    //храним только последние 10 найденных фильмов
+                    history.Add(Convert.ToString(roller.return_movie().Title));   //запоминаем найденный фильм
+                }
             }
             catch (Exception) { };
 
@@ -158,12 +171,12 @@ namespace movieRoller
         {
             //нужно найти название жанра на английском по айдишнику жанра на русском
             string en_genre = "";
-            int id=0;
+            int id = 0;
 
             if (ru_genre.Length > 2)
             {
                 var ru_genres = Enum.GetValues(typeof(Genres.RuTitle));
-                for(int i=0; i<ru_genres.Length; ++i)
+                for (int i = 0; i < ru_genres.Length; ++i)
                 {
                     string a = ru_genres.GetValue(i).ToString();
                     if (ru_genres.GetValue(i).ToString() == ru_genre)
@@ -172,7 +185,7 @@ namespace movieRoller
                         break;
                     }
                 }
-                
+
             }
             en_genre = Enum.GetNames(typeof(Genres.Title))[id].ToString(); //получаем жанр на английском языке
             return en_genre;
@@ -197,7 +210,7 @@ namespace movieRoller
 
         private void genres_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(cb_other.IsChecked == true)
+            if (cb_other.IsChecked == true)
                 try
                 {
                     roller.AddRemoveGenre(chosenOtherGenre, true);
@@ -241,53 +254,67 @@ namespace movieRoller
             info_title.Content = rolled_movie.Title;
             info_amnt_votes.Content = rolled_movie.VoteCount;
             info_rating.Content = rolled_movie.VoteAverage;
-            for(int genre = 0; genre < rolled_movie.GenreIds.Count; ++genre)
+            for (int genre = 0; genre < rolled_movie.GenreIds.Count; ++genre)
             {
                 info_genres.Text += Enum.GetName(typeof(Genres.RuTitle), rolled_movie.GenreIds[genre]);
                 if (genre != rolled_movie.GenreIds.Count - 1) info_genres.Text += ", ";
             }
         }
 
-       
-        private void year_higher_b_KeyUp(object sender, KeyEventArgs e)
+
+        private void btn_history_Click(object sender, RoutedEventArgs e)
         {
-            char a = (char)e.Key;
+            canvas_history.Visibility = Visibility.Visible;
+            loading_background.Visibility = Visibility.Visible;
+            tb_history.Clear();
+            int i = 1;
+            foreach (string film in history)     //построчный вывод подобранных фильмов
+            {
+                if (i != history.Count) tb_history.Text += Convert.ToString(i) + ". " + Convert.ToString(film) + Environment.NewLine;
+                else tb_history.Text += Convert.ToString(i) + ". " + Convert.ToString(film);
+                i++;
+            }
         }
 
-        private void btn_search_Click(object sender, RoutedEventArgs e)
+        private void btn_close_history_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://yandex.ru/search/?lr=213&text=" + Uri.EscapeUriString(roller.rolledMovie));
+            canvas_history.Visibility = Visibility.Hidden;
+            loading_background.Visibility = Visibility.Hidden;
+
         }
+            private void year_higher_b_KeyUp(object sender, KeyEventArgs e)
+            {
+                char a = (char)e.Key;
 
-        
-        private void year_higher_b_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)  //реагирование на изменение верхней границы
-        {
-            //Console.WriteLine("1");
-            if (year_higher_b.Text == "") year_higher_b.Text = Convert.ToString(years_slider.Maximum);
-            if (Convert.ToInt32(year_higher_b.Text) > Convert.ToInt32(DateTime.Now.Year))  
-                year_higher_b.Text = Convert.ToString(DateTime.Now.Year);
-            if (Convert.ToInt32(year_higher_b.Text) < Convert.ToInt32(year_lower_b.Text))
-                year_higher_b.Text = Convert.ToString(Convert.ToInt32(year_lower_b.Text)+1);
-            years_slider.HigherValue = Convert.ToInt32(year_higher_b.Text);   
-        }
+            }
 
-        private void year_lower_b_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)  //реагирвоание на изменение нижней границы
-        {
-            if (year_lower_b.Text == "") year_lower_b.Text = Convert.ToString(years_slider.Minimum);
-            if (Convert.ToInt32(year_lower_b.Text) < years_slider.Minimum)
-                year_lower_b.Text = Convert.ToString(years_slider.Minimum);
-            if (Convert.ToInt32(year_higher_b.Text) < Convert.ToInt32(year_lower_b.Text))
-                year_lower_b.Text = Convert.ToString(Convert.ToInt32(year_higher_b.Text) - 1);
-            years_slider.LowerValue = Convert.ToInt32(year_lower_b.Text);  
-        }
+            private void btn_search_Click(object sender, RoutedEventArgs e)
+            {
+                System.Diagnostics.Process.Start("https://yandex.ru/search/?lr=213&text=фильм " + Uri.EscapeUriString(roller.rolledMovie));
+            }
 
 
+            private void year_higher_b_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)  //реагирование на изменение верхней границы
+            {
+                //Console.WriteLine("1");
+                if (year_higher_b.Text == "") year_higher_b.Text = Convert.ToString(years_slider.Maximum);
+                if (Convert.ToInt32(year_higher_b.Text) > Convert.ToInt32(DateTime.Now.Year))
+                    year_higher_b.Text = Convert.ToString(DateTime.Now.Year);
+                if (Convert.ToInt32(year_higher_b.Text) < Convert.ToInt32(year_lower_b.Text))
+                    year_higher_b.Text = Convert.ToString(Convert.ToInt32(year_lower_b.Text) + 1);
+                years_slider.HigherValue = Convert.ToInt32(year_higher_b.Text);
+            }
 
-        //настройка подбора по жанрам
-        private void fill_set_to_find()
-        {
-            set_to_find.Items.Add("Хотя бы один");
-            set_to_find.Items.Add("Как можно больше");            
-        }
+            private void year_lower_b_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)  //реагирвоание на изменение нижней границы
+            {
+                if (year_lower_b.Text == "") year_lower_b.Text = Convert.ToString(years_slider.Minimum);
+                if (Convert.ToInt32(year_lower_b.Text) < years_slider.Minimum)
+                    year_lower_b.Text = Convert.ToString(years_slider.Minimum);
+                if (Convert.ToInt32(year_higher_b.Text) < Convert.ToInt32(year_lower_b.Text))
+                    year_lower_b.Text = Convert.ToString(Convert.ToInt32(year_higher_b.Text) - 1);
+                years_slider.LowerValue = Convert.ToInt32(year_lower_b.Text);
+            }
+ 
     }
 }
+

@@ -41,8 +41,9 @@
             <CheckBox x:Name="cb_drama" Content="Драма" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Foreground="White" Checked="cb_drama_Checked" Unchecked="cb_drama_Unchecked" FontFamily="Montserrat SemiBold" FontSize="16" Style="{DynamicResource CheckBoxStyle}" Canvas.Top="31" />
             <CheckBox x:Name="cb_action" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Content="Боевик" Foreground="White" Checked="cb_action_Checked" Unchecked="cb_action_Unchecked" FontFamily="Montserrat SemiBold" FontSize="16" Style="{DynamicResource CheckBoxStyle}" Canvas.Top="62" />
             <CheckBox x:Name="cb_horror" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Content="Ужасы" Foreground="White" Unchecked="cb_horror_Unchecked" Checked="cb_horror_Checked" FontFamily="Montserrat SemiBold" FontSize="16" Style="{DynamicResource CheckBoxStyle}" Canvas.Top="93" />
-            <ComboBox x:Name="genres_list" HorizontalAlignment="Left" VerticalAlignment="Top" Width="126" SelectionChanged="genres_list_SelectionChanged" SelectedIndex="0" FontFamily="Montserrat SemiBold" BorderBrush="Transparent" Background="White" VerticalContentAlignment="Center" Style="{DynamicResource ComboBoxStyle}" Height="26" Canvas.Left="132" Canvas.Top="122" IsEnabled="False"/>
-            <CheckBox x:Name="cb_other" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Content="Другое" Foreground="White" Checked="cb_other_Checked" Unchecked="cb_other_Unchecked" FontFamily="Montserrat SemiBold" FontSize="16" Style="{DynamicResource CheckBoxStyle}" Canvas.Top="124" />
+            <ComboBox x:Name="genres_list" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" SelectionChanged="genres_list_SelectionChanged" SelectedIndex="0" FontFamily="Montserrat SemiBold" BorderBrush="Transparent" Background="White" VerticalContentAlignment="Center" Style="{DynamicResource ComboBoxStyle}" Height="26" Canvas.Left="22" Canvas.Top="122" IsEnabled="False"/>
+            <CheckBox x:Name="cb_other" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="19" Content="" Foreground="White" Checked="cb_other_Checked" Unchecked="cb_other_Unchecked" FontFamily="Montserrat SemiBold" FontSize="16" Style="{DynamicResource CheckBoxStyle}" Canvas.Top="124" />
+            <CheckBox x:Name="cb_age" Content="Исключить 21+" Canvas.Left="134" Canvas.Top="127" Height="21" Style="{DynamicResource CheckBoxStyle}" FontFamily="Montserrat SemiBold" FontSize="16" Foreground="White"/>
         </Canvas>
         <Canvas x:Name="rolled_movie_canvas" HorizontalAlignment="Center" VerticalAlignment="Center" Width="302" Height="174" Margin="46,235,46,31">
 
@@ -73,7 +74,7 @@
                     </ToolTip>
                 </Button.ToolTip>
             </Button>
-            <Button x:Name="btn_history" VerticalContentAlignment="Center" HorizontalContentAlignment ="Center"  Content="История" Height="30" Width="73" Style="{DynamicResource ButtonStyle}" Background="#FFA2424E" Foreground="White" FontFamily="Montserrat SemiBold" Canvas.Left="199" FontSize="11" IsEnabled="False" Canvas.Top="7">
+            <Button x:Name="btn_history" VerticalContentAlignment="Center" HorizontalContentAlignment ="Center"  Content="История" Height="30" Width="73" Style="{DynamicResource ButtonStyle}" Background="#FFA2424E" Foreground="White" FontFamily="Montserrat SemiBold" Canvas.Left="199" FontSize="11" IsEnabled="False" Canvas.Top="7" Click="btn_history_Click">
                 <Button.ToolTip>
                     <ToolTip Width="250" Height="25">
                         <StackPanel>
@@ -127,8 +128,9 @@
         <Rectangle x:Name="loading_background" Fill="#FF1D1B21" HorizontalAlignment="Left" Height="465" Margin="-15,-10,-16,-15" RadiusY="20" RadiusX="20" VerticalAlignment="Top" Width="425" Opacity="0.8" Visibility="Hidden"/>
         <Image x:Name="loading_animation" gif:ImageBehavior.RepeatBehavior="10000x"
             gif:ImageBehavior.AnimatedSource="loading_3.gif" Margin="106,92" Visibility="Hidden" />
+
         <Canvas x:Name="canvas_info" Margin="64,122,70,114" Visibility="Hidden">
-            <Rectangle Fill="#FF1D1B21" HorizontalAlignment="Left" Height="188" RadiusY="20" RadiusX="20" VerticalAlignment="Top" Width="260" Opacity="0.95">
+            <Rectangle Fill="#FF1D1B21" HorizontalAlignment="Left" Height="188" RadiusY="20" RadiusX="20" VerticalAlignment="Top" Width="260" Opacity="0.95" d:IsHidden="True">
                 <Rectangle.Effect>
                     <DropShadowEffect BlurRadius="40" ShadowDepth="0" Opacity="0.4" Color="#FFE66A79" Direction="100"/>
                 </Rectangle.Effect>
@@ -145,9 +147,24 @@
             <Label x:Name="info_amnt_votes" Content="" Canvas.Left="131" Canvas.Top="72" Width="110" FontFamily="Montserrat SemiBold" Background="{x:Null}" Foreground="White" VerticalContentAlignment="Center"/>
         </Canvas>
         <Image IsHitTestVisible="False" Margin="-280,-255,-246,-324" Source="noise.png" Opacity="0.02" d:IsHidden="True"/>
+
+        <Canvas x:Name="canvas_history" Margin="64,58,70,114" Visibility="Hidden">
+            <Rectangle Fill="#FF1D1B21" HorizontalAlignment="Left" Height="268" RadiusY="20" RadiusX="20" VerticalAlignment="Top" Width="260" Opacity="0.95" d:IsHidden="True">
+                <Rectangle.Effect>
+                    <DropShadowEffect BlurRadius="40" ShadowDepth="0" Opacity="0.4" Color="#FFE66A79" Direction="100"/>
+                </Rectangle.Effect>
+
+
+    
+            </Rectangle>
+
+            <Button x:Name="btn_close_history" Content="Закрыть" HorizontalAlignment="Left" Height="33" VerticalAlignment="Top" Width="240" Style="{DynamicResource ButtonStyle}" Background="#FFE66A79" Canvas.Top="222" Canvas.Left="10" Click="btn_close_history_Click"/>
+            <Label x:Name="history__label" Content="История поиска" Canvas.Left="10" Width="240" FontFamily="Montserrat SemiBold" Background="{x:Null}" Foreground="White" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="45" Canvas.Top="6"/>
+            <TextBox x:Name="tb_history" IsReadOnly="True" Height="145" TextWrapping="Wrap" Width="218" Canvas.Left="21" Canvas.Top="56" Background="{x:Null}" Foreground="White" FontFamily="Montserrat SemiBold" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Style="{DynamicResource ComboBoxEditableTextBox}"/>
+        </Canvas>
+
         <TextBox x:Name="year_higher_b" HorizontalAlignment="Left" Height="21" Margin="288,129,0,0" TextWrapping="Wrap" Text="2021" VerticalAlignment="Top" Width="36" SelectionOpacity="4" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" LostKeyboardFocus="year_higher_b_LostKeyboardFocus"/>
         <ComboBox x:Name="set_to_find" HorizontalAlignment="Left" Margin="27,36,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0"/>
         <TextBox x:Name="year_lower_b" HorizontalAlignment="Left" Height="21" Margin="197,129,0,0" TextWrapping="Wrap" Text="1950" VerticalAlignment="Top" Width="36" SelectionOpacity="4" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" LostKeyboardFocus="year_lower_b_LostKeyboardFocus"/>
     </Grid>
-
 </Window>
