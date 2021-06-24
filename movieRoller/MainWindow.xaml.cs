@@ -1,255 +1,188 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TMDbLib;
-using TMDbLib.Client;
-using TMDbLib.Objects.Discover;
-using TMDbLib.Objects.General;
-using TMDbLib.Objects.Genres;
-using TMDbLib.Objects.Movies;
 using TMDbLib.Objects.Search;
-using TMDbLib.Utilities.Converters;
-
+using System.Windows.Media.Animation;
+using System.Threading.Tasks;
 namespace movieRoller
 {
-    public enum GenreName
-    {
-        Action = 28,
-        Adventure = 12,
-        Animation = 16,
-        Comedy = 35,
-        Crime = 80,
-        Documentary = 99,
-        Drama = 18,
-        Family = 10751,
-        Fantasy = 14,
-        History = 36,
-        Horror = 27,
-        Music = 10402,
-        Mystery = 9648,
-        Romance = 10749,
-        ScienceFiction = 878,
-        TVMovie = 10770,
-        Thriller = 53,
-        War = 10752,
-        Western = 37
-    }
-
-
-    public class MovieRoller
-    {
-        MainWindow main_Window; //aaa
-        TMDbClient client; //клиент для работы с api
-        string api_key = "ed7d16aeb09ffce311534f878ece4fb3";
-        SearchMovie rolled_movie; //подобранный фильм
-        int primary_year = 2020;
-        List<int> chosenGanresIDs = new List<int>(); //добавление/удаление жанра = select/unselect чекбокса у жанра
-        Dictionary<GenreName, int> GenresIDs = new Dictionary<GenreName, int>(); //список жанров с их ID   
-
-        List<GenreName> genres = new List<GenreName>();
-
-        public MovieRoller(MainWindow mainW)
-        {
-            main_Window = mainW;
-            client = new TMDbClient(api_key);
-            client.DefaultLanguage = "ru";
-
-            ParseGanresIDs();
-        }
-
-        async public void ParseMovie()
-        {
-            int amnt_checking_pages = 5; //кол-во обратываеых страниц с фильмами
-
-            if (chosenGanresIDs.Count == 0)
-            {
-                MessageBox.Show("Выберите хотя бы один жанр!");
-                return;
-            }
-            else
-            {
-                //await client.GetConfigAsync(); //до этого без этой функции ничего не работало, а щас работает, почему - хз
-                //chosenGanresIDs.Add(28); //для теста добавим жанр - "Action"
-                primary_year = new Random().Next((int)main_Window.years_slider.LowerValue, (int)main_Window.years_slider.HigherValue);
-                SearchContainer<SearchMovie> rolled_movies = null;
-                bool rolled = false;
-                int amnt_tries = 0;
-                main_Window.btn_roll.IsEnabled = false;
-                main_Window.loading_background.Visibility = Visibility.Visible;
-                main_Window.loading_animation.Visibility = Visibility.Visible;
-                while (!rolled && amnt_tries < 31)
-                {
-                    amnt_tries++;
-                    try
-                    {
-                        rolled_movies = await client.
-                               DiscoverMoviesAsync().
-                               IncludeWithAnyOfGenre(chosenGanresIDs).
-                               OrderBy(DiscoverMovieSortBy.PopularityDesc).
-                               WherePrimaryReleaseIsInYear(primary_year).
-                               Query(new Random().Next(1, amnt_checking_pages));
-                        rolled = true;
-                    }
-                    catch (Exception) { }
-                }
-                if (amnt_tries == 30 && !rolled)
-                    MessageBox.Show("Произошла ошибка!\nПопробуйте нажать на кнопку снова.", "Ошибка");
-
-                if (rolled)
-                {
-                    main_Window.loading_background.Visibility = Visibility.Hidden;
-                    main_Window.loading_animation.Visibility = Visibility.Hidden;
-                    string overview = "";
-                    rolled_movie = rolled_movies.Results[new Random().Next(0, rolled_movies.Results.Count() - 1)];
-                    main_Window.txt_rolled_movie.Text = rolled_movie.Title;
-                    overview = rolled_movie.Overview;
-                    int words_in_str = 0;
-                    if (overview.Length < 10)
-                        overview = "Описание отсутствует";
-                    else
-                        for(int i=0; i<overview.Length; ++i)
-                        {
-                            if (overview[i] == ' ')
-                            {
-                                if (words_in_str == 10)
-                                {
-                                    overview = overview.Insert(i, "\n");
-                                    words_in_str = 0;
-                                }
-                                else words_in_str++;
-                            }
-                        
-                        }
-                    main_Window.txt_rolled_movie.ToolTip = overview;
-
-                    if (main_Window.txt_rolled_movie.Text.Length > 1)
-                    {
-                        main_Window.btn_roll.Visibility = Visibility.Hidden; //если нажали кнопку рола фильма и рол был успешен, скроем кнопку
-                        main_Window.rolled_movie_canvas.Visibility = Visibility.Visible;
-                    }
-                }
-            }
-        }
-        public string rolledMovie
-        {
-            get { return rolled_movie.Title; }
-        }
-
-        void ParseGanresIDs()
-        {
-            foreach (GenreName genre in Enum.GetValues(typeof(GenreName)))
-                GenresIDs[genre] = (int)genre;
-
-            /*var genres_list = await client.GetMovieGenresAsync();
-            for (GenreName genre = 0; (int)genre < genres_list.Count; ++genre)
-                GenresIDs[genre] = genres_list[(int)genre].Id;*/
-        }
-
-        public void AddRemoveGenre(GenreName genre, bool remove = false)
-        {
-            try
-            {
-                if (!remove) //если не убираем, тогда посмотрим, есть у нас уже этот жанр или нет, если нет, то добавим в список
-                {
-                    if (!chosenGanresIDs.Contains(GenresIDs[genre]))
-                        chosenGanresIDs.Add(GenresIDs[genre]);
-                }
-                else if (remove && chosenGanresIDs.Contains(GenresIDs[genre])) //если убираем жанр, то проверим, есть у нас он вообще или нет, если есть, то уберем
-                    chosenGanresIDs.Remove(GenresIDs[genre]);
-
-            }
-            catch (Exception) { }
-        }
-    }
     public partial class MainWindow : Window
     {
-        MovieRoller roller; // сам подборщик фильмов
-        GenreName chosenOtherGenre; // выбранный "другой" жанр
+        SearchMovie rolled_movie;
+        Roller.MovieRoller roller; // сам подборщик фильмов
+        Genres.Title chosenOtherGenre; // выбранный "другой" жанр
+        List<string> history = new List<string>();  //список для истории найденных фильмов
+
+        int year_l_border, year_r_border;
+        int checking_pages = 3;
+        int max_year = DateTime.Now.Year;
+        int min_year = 1950;
         public MainWindow()
         {
             InitializeComponent();
-            roller = new MovieRoller(this);
+            roller = new Roller.MovieRoller();
+            fill_genres_list();
+            fill_set_to_find(); //заполнить выбор настроек
+            
+            years_slider.Maximum = max_year;
+            year_higher_b.Text = max_year.ToString();
             years_slider.LowerValue = years_slider.Minimum;
             years_slider.HigherValue = years_slider.Maximum;
-            foreach (GenreName genre in Enum.GetValues(typeof(GenreName)))
+        }
+
+        private void fill_genres_list()
+        {
+            foreach (Genres.RuTitle genre in Enum.GetValues(typeof(Genres.RuTitle)))
                 genres_list.Items.Add(genre);
+        }
 
-            /*for (GenreName genre = 0; (int)genre < 18; ++genre)
-                genres_list.Items.Add(genre);*/
+        //настройка подбора по жанрам
+        private void fill_set_to_find()
+        {
+            set_to_find.Items.Add("Любой жанр");
+            set_to_find.Items.Add("Все жанры");
+        }
 
-            // years_slider.SetBinding(Xceed.Wpf.Toolkit.RangeSlider.MaximumProperty, "year_lower_b");
+        async public void roll_click()
+        {
+            if (!roller.check_internet())
+            {
+                MessageBox.Show("Нет доступа к интернету!", "Ошибка");
+                loading_background.Visibility = Visibility.Hidden;
+                loading_animation.Visibility = Visibility.Hidden;
+                return;
+            }
 
+            year_l_border = int.Parse(year_lower_b.Text.ToString());
+            year_r_border = int.Parse(year_higher_b.Text.ToString());
+
+            loading_background.Visibility = Visibility.Visible;
+            loading_animation.Visibility = Visibility.Visible;
+
+            bool all_genres;
+            if (Convert.ToString(set_to_find.SelectedItem) == "Любой жанр") all_genres = false;
+            else all_genres = true;
+            try
+            {
+                int timeout = 5000;
+                var task = roller.ParseMovie(year_l_border, year_r_border, checking_pages, all_genres, cb_age.IsChecked.Value);
+                if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
+                {
+                    rolled_movie = roller.return_movie();
+                }
+                else rolled_movie = null;
+                if (rolled_movie != null)
+                {
+                    if (history.Count > 9) history.RemoveAt(0);    //храним только последние 10 найденных фильмов
+                    history.Add(Convert.ToString(roller.return_movie().Title));   //запоминаем найденный фильм
+                }
+            }
+            catch (Exception) {
+                rolled_movie = null;
+            };
+
+            loading_background.Visibility = Visibility.Hidden;
+            loading_animation.Visibility = Visibility.Hidden;
+            if (roller.GenresCount == 0)
+            {
+                MessageBox.Show("Выберите хотя бы один жанр!");
+            }
+            else if (rolled_movie == null)
+            {
+                MessageBox.Show("Упс...Произошла ошибка :c");
+            }
+            else
+            {
+                txt_rolled_movie.Text = rolled_movie.Title;
+                btn_movie_info.IsEnabled = true;
+                btn_history.IsEnabled = true;
+                btn_search.IsEnabled = true;
+                if (txt_rolled_movie.Text.Length > 1)
+                {
+                    btn_roll.Visibility = Visibility.Hidden; //если нажали кнопку рола фильма и рол был успешен, скроем кнопку
+                    rolled_movie_canvas.Visibility = Visibility.Visible;
+                }
+
+            }
         }
 
         private void btn_roll_Click(object sender, RoutedEventArgs e)
         {
-            roller.ParseMovie();
+            roll_click();
         }
+
 
         private void cb_comedy_Checked(object sender, RoutedEventArgs e)
         {
-            roller.AddRemoveGenre(GenreName.Comedy);
+            roller.AddRemoveGenre(Genres.Title.Comedy);
         }
 
         private void cb_drama_Checked(object sender, RoutedEventArgs e)
         {
-            roller.AddRemoveGenre(GenreName.Drama);
+            roller.AddRemoveGenre(Genres.Title.Drama);
         }
 
         private void cb_drama_Unchecked(object sender, RoutedEventArgs e)
         {
-            roller.AddRemoveGenre(GenreName.Drama, true);
+            roller.AddRemoveGenre(Genres.Title.Drama, true);
         }
 
         private void cb_comedy_Unchecked(object sender, RoutedEventArgs e)
         {
-            roller.AddRemoveGenre(GenreName.Comedy, true);
+            roller.AddRemoveGenre(Genres.Title.Comedy, true);
         }
 
         private void cb_action_Checked(object sender, RoutedEventArgs e)
         {
-            roller.AddRemoveGenre(GenreName.Action);
+            roller.AddRemoveGenre(Genres.Title.Action);
         }
 
         private void cb_action_Unchecked(object sender, RoutedEventArgs e)
         {
-            roller.AddRemoveGenre(GenreName.Action, true);
+            roller.AddRemoveGenre(Genres.Title.Action, true);
         }
 
         private void cb_horror_Unchecked(object sender, RoutedEventArgs e)
         {
-            roller.AddRemoveGenre(GenreName.Horror, true);
+            roller.AddRemoveGenre(Genres.Title.Horror, true);
         }
 
         private void cb_horror_Checked(object sender, RoutedEventArgs e)
         {
-            roller.AddRemoveGenre(GenreName.Horror);
+            roller.AddRemoveGenre(Genres.Title.Horror);
+        }
+
+        private string fromRuToEnGenre(string ru_genre)
+        {
+            //нужно найти название жанра на английском по айдишнику жанра на русском
+            string en_genre = "";
+            int id = 0;
+
+            if (ru_genre.Length > 2)
+            {
+                var ru_genres = Enum.GetValues(typeof(Genres.RuTitle));
+                for (int i = 0; i < ru_genres.Length; ++i)
+                {
+                    string a = ru_genres.GetValue(i).ToString();
+                    if (ru_genres.GetValue(i).ToString() == ru_genre)
+                    {
+                        id = i;
+                        break;
+                    }
+                }
+
+            }
+            en_genre = Enum.GetNames(typeof(Genres.Title))[id].ToString(); //получаем жанр на английском языке
+            return en_genre;
         }
 
         private void cb_other_Checked(object sender, RoutedEventArgs e)
         {
             genres_list.IsEnabled = true;
-            chosenOtherGenre = (GenreName)Enum.Parse(typeof(GenreName), genres_list.Text);
+            chosenOtherGenre = (Genres.Title)Enum.Parse(typeof(Genres.Title), fromRuToEnGenre(genres_list.Text));
             roller.AddRemoveGenre(chosenOtherGenre);
         }
 
@@ -265,30 +198,24 @@ namespace movieRoller
 
         private void genres_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(cb_other.IsChecked == true)
+            if (cb_other.IsChecked == true)
                 try
                 {
                     roller.AddRemoveGenre(chosenOtherGenre, true);
-                    chosenOtherGenre = (GenreName)Enum.Parse(typeof(GenreName), e.AddedItems[0].ToString());
+                    chosenOtherGenre = (Genres.Title)Enum.Parse(typeof(Genres.Title), fromRuToEnGenre(e.AddedItems[0].ToString()));
                     roller.AddRemoveGenre(chosenOtherGenre);
                 }
                 catch (Exception) { }
         }
 
-
-        private void btn_reroll_Click(object sender, RoutedEventArgs e)
-        {
-            roller.ParseMovie();
-        }
-
         private void years_slider_LowerValueChanged(object sender, RoutedEventArgs e)
         {
-            year_lower_b.Content = ((int)years_slider.LowerValue).ToString();
+            year_lower_b.Text = ((int)years_slider.LowerValue).ToString();
         }
 
         private void years_slider_HigherValueChanged(object sender, RoutedEventArgs e)
         {
-            year_higher_b.Content = ((int)years_slider.HigherValue).ToString();
+            year_higher_b.Text = ((int)years_slider.HigherValue).ToString();
         }
 
         private void reroll_image_MouseEnter(object sender, MouseEventArgs e)
@@ -301,9 +228,105 @@ namespace movieRoller
             btn_reroll.Focus();
         }
 
+        private void info_close_Click(object sender, RoutedEventArgs e)
+        {
+            canvas_info.Visibility = Visibility.Hidden;
+            loading_background.Visibility = Visibility.Hidden;
+        }
+
+        private void btn_movie_info_Click(object sender, RoutedEventArgs e)
+        {
+            info_genres.Clear();
+            canvas_info.Visibility = Visibility.Visible;
+            loading_background.Visibility = Visibility.Visible;
+            info_title.Content = rolled_movie.Title;
+            info_amnt_votes.Content = rolled_movie.VoteCount;
+            info_rating.Content = rolled_movie.VoteAverage;
+            for (int genre = 0; genre < rolled_movie.GenreIds.Count; ++genre)
+            {
+                info_genres.Text += Enum.GetName(typeof(Genres.RuTitle), rolled_movie.GenreIds[genre]);
+                if (genre != rolled_movie.GenreIds.Count - 1) info_genres.Text += ", ";
+            }
+        }
+
+
+        private void btn_history_Click(object sender, RoutedEventArgs e)
+        {
+            canvas_history.Visibility = Visibility.Visible;
+            loading_background.Visibility = Visibility.Visible;
+            tb_history.Clear();
+            int i = 1;
+            foreach (string film in history)     //построчный вывод подобранных фильмов
+            {
+                if (i != history.Count) tb_history.Text += Convert.ToString(i) + ". " + Convert.ToString(film) + Environment.NewLine;
+                else tb_history.Text += Convert.ToString(i) + ". " + Convert.ToString(film);
+                i++;
+            }
+        }
+
+        private void btn_close_history_Click(object sender, RoutedEventArgs e)
+        {
+            canvas_history.Visibility = Visibility.Hidden;
+            loading_background.Visibility = Visibility.Hidden;
+
+        }
+
         private void btn_search_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://yandex.ru/search/?lr=213&text=" + Uri.EscapeUriString(roller.rolledMovie));
+            System.Diagnostics.Process.Start("https://yandex.ru/search/?lr=213&text=фильм " + Uri.EscapeUriString(roller.rolledMovie));
         }
+
+
+        private void year_higher_b_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)  //реагирование на изменение верхней границы
+        {
+            if (year_higher_b.Text == "") year_higher_b.Text = Convert.ToString(years_slider.Maximum);
+            if (Convert.ToInt32(year_higher_b.Text) > Convert.ToInt32(DateTime.Now.Year))
+                year_higher_b.Text = Convert.ToString(DateTime.Now.Year);
+            if (Convert.ToInt32(year_higher_b.Text) < Convert.ToInt32(year_lower_b.Text))
+                year_higher_b.Text = Convert.ToString(Convert.ToInt32(year_lower_b.Text) + 1);
+            years_slider.HigherValue = Convert.ToInt32(year_higher_b.Text);
+        }
+
+        private void text_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !(Char.IsDigit(e.Text, 0)&&year_lower_b.Text.Length < 5&&year_higher_b.Text.Length < 5);
+        }
+
+        private void year_lower_b_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                int.Parse(year_lower_b.Text.ToString());
+            }
+            catch (Exception)
+            {
+                year_lower_b.Text = min_year.ToString();
+            }
+
+        }
+
+        private void year_higher_b_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                int.Parse(year_higher_b.Text.ToString());
+            }
+            catch (Exception)
+            {
+                year_higher_b.Text = max_year.ToString();
+            }
+        }
+
+        private void year_lower_b_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)  //реагирвоание на изменение нижней границы
+            {
+                if (year_lower_b.Text == "") year_lower_b.Text = Convert.ToString(years_slider.Minimum);
+                if (Convert.ToInt32(year_lower_b.Text) < years_slider.Minimum)
+                    year_lower_b.Text = Convert.ToString(years_slider.Minimum);
+                if (Convert.ToInt32(year_higher_b.Text) < Convert.ToInt32(year_lower_b.Text))
+                    year_lower_b.Text = Convert.ToString(Convert.ToInt32(year_higher_b.Text) - 1);
+                years_slider.LowerValue = Convert.ToInt32(year_lower_b.Text);
+            }
+ 
     }
 }
+

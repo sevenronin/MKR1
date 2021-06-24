@@ -7,37 +7,37 @@
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="movieRoller.MainWindow"
         mc:Ignorable="d"
-        Title="movieRoller" Height="370" Width="400" Background="#FF31283A" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="movieRoller" Height="469" Width="400" Background="#FF31283A" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-
-
-
-        <Image IsHitTestVisible="False" Margin="-271,-5,-320,-6" Source="фвфв.png" Stretch="Fill"/>
-
-
-
-        <Rectangle Fill="#FF1C181D" HorizontalAlignment="Left" Height="287.314" Margin="23,22.686,0,0" VerticalAlignment="Top" Width="341" RadiusY="30" RadiusX="30" Opacity="0.4"/>
-
-
+        <Image IsHitTestVisible="False" Margin="-305,-58.668,-550.638,-61.517" Source="background.png" UseLayoutRounding="False" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1" ScaleX="1"/>
+                    <SkewTransform AngleY="0" AngleX="0"/>
+                    <RotateTransform Angle="0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+        <Rectangle Fill="#FF1C181D" HorizontalAlignment="Left" Height="392" Margin="23,23,0,0" VerticalAlignment="Top" Width="341" RadiusY="30" RadiusX="30" Opacity="0.4"/>
         <Rectangle Fill="#FF1C181D" HorizontalAlignment="Left" Height="187" Margin="43,39.843,0,0" VerticalAlignment="Top" Width="301" RadiusY="20" RadiusX="20" Opacity="0.4"/>
-        <Rectangle Fill="#FF1C181D" HorizontalAlignment="Left" Height="51" Margin="43,242,0,0" VerticalAlignment="Top" Width="262" RadiusY="20" RadiusX="20" Opacity="0.4"/>
-
-
-        <Button x:Name="btn_roll" Content="Подобрать фильм" HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" Width="301" Click="btn_roll_Click" Cursor="Hand" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFE66A79" BorderBrush="#FFA061EA" Foreground="White" Margin="43,241.843,0,0" Style="{DynamicResource ButtonStyle}" FontSize="16" FontFamily="Montserrat SemiBold"/>
+        <Rectangle Fill="#FF1C181D" HorizontalAlignment="Left" Height="51" Margin="43,279,0,0" VerticalAlignment="Top" Width="301" RadiusY="20" RadiusX="20" Opacity="0.4"/>
+        <Button x:Name="btn_roll" Content="Подобрать фильм" HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" Width="301" Click="btn_roll_Click" Cursor="Hand" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFE66A79" BorderBrush="#FFA061EA" Foreground="White" Margin="43,241.843,0,0" Style="{DynamicResource ButtonStyle}" FontSize="16" FontFamily="Montserrat SemiBold" Visibility="Hidden"/>
         <Canvas Margin="64,57.843,72,114.157">
             <CheckBox x:Name="cb_comedy" Content="Комедия" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Foreground="White" Checked="cb_comedy_Checked" Unchecked="cb_comedy_Unchecked" FontFamily="Montserrat SemiBold" FontSize="16" BorderBrush="White" Background="White" Style="{DynamicResource CheckBoxStyle}" />
             <CheckBox x:Name="cb_drama" Content="Драма" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Foreground="White" Checked="cb_drama_Checked" Unchecked="cb_drama_Unchecked" FontFamily="Montserrat SemiBold" FontSize="16" Style="{DynamicResource CheckBoxStyle}" Canvas.Top="31" />
             <CheckBox x:Name="cb_action" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Content="Боевик" Foreground="White" Checked="cb_action_Checked" Unchecked="cb_action_Unchecked" FontFamily="Montserrat SemiBold" FontSize="16" Style="{DynamicResource CheckBoxStyle}" Canvas.Top="62" />
             <CheckBox x:Name="cb_horror" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Content="Ужасы" Foreground="White" Unchecked="cb_horror_Unchecked" Checked="cb_horror_Checked" FontFamily="Montserrat SemiBold" FontSize="16" Style="{DynamicResource CheckBoxStyle}" Canvas.Top="93" />
-            <ComboBox x:Name="genres_list" HorizontalAlignment="Left" VerticalAlignment="Top" Width="126" SelectionChanged="genres_list_SelectionChanged" SelectedIndex="0" FontFamily="Montserrat SemiBold" BorderBrush="Transparent" Background="White" VerticalContentAlignment="Center" Style="{DynamicResource ComboBoxStyle}" Height="26" Canvas.Left="132" Canvas.Top="122" IsEnabled="False"/>
-            <CheckBox x:Name="cb_other" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Content="Другое" Foreground="White" Checked="cb_other_Checked" Unchecked="cb_other_Unchecked" FontFamily="Montserrat SemiBold" FontSize="16" Style="{DynamicResource CheckBoxStyle}" Canvas.Top="124" />
+            <ComboBox x:Name="genres_list" HorizontalAlignment="Left" VerticalAlignment="Top" Width="119" SelectionChanged="genres_list_SelectionChanged" SelectedIndex="0" FontFamily="Montserrat SemiBold" BorderBrush="Transparent" Background="White" VerticalContentAlignment="Center" Style="{DynamicResource ComboBoxStyle}" Height="26" Canvas.Left="22" Canvas.Top="122" IsEnabled="False"/>
+            <CheckBox x:Name="cb_other" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="19" Content="" Foreground="White" Checked="cb_other_Checked" Unchecked="cb_other_Unchecked" FontFamily="Montserrat SemiBold" FontSize="16" Style="{DynamicResource CheckBoxStyle}" Canvas.Top="124" />
+            <CheckBox x:Name="cb_age" Content="Фильмы 18+" Height="21" Style="{DynamicResource CheckBoxStyle}" FontFamily="Montserrat SemiBold" Foreground="White" Canvas.Top="68" VerticalContentAlignment="Bottom" Canvas.Left="149" FontSize="14"/>
         </Canvas>
-        <Canvas x:Name="rolled_movie_canvas" HorizontalAlignment="Center" VerticalAlignment="Top" Width="301" Height="40" Margin="47.5,247.608,54.5,0" Visibility="Hidden">
+        <Canvas x:Name="rolled_movie_canvas" HorizontalAlignment="Center" VerticalAlignment="Center" Width="302" Height="174" Margin="46,235,46,31">
 
-            <TextBox x:Name="txt_rolled_movie" IsReadOnly="true" TextWrapping="Wrap" Width="241" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="41" Background="{x:Null}" Foreground="White" FontFamily="Montserrat SemiBold" BorderBrush="{x:Null}" Style="{DynamicResource ComboBoxEditableTextBox}" AllowDrop="True" Canvas.Left="10">
+            <TextBox x:Name="txt_rolled_movie" IsReadOnly="true" TextWrapping="Wrap" Width="281" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="43" Background="{x:Null}" Foreground="White" FontFamily="Montserrat SemiBold" BorderBrush="{x:Null}" Style="{DynamicResource ComboBoxEditableTextBox}" AllowDrop="True" Canvas.Left="10" Text="Тут будет подобранный фильм..." Canvas.Top="52">
                 <TextBox.ToolTip>
                     <ToolTip Width="300" Height="50">
                         <StackPanel>
@@ -46,9 +46,35 @@
                     </ToolTip>
                 </TextBox.ToolTip>
             </TextBox>
-            <Canvas Height="40" Canvas.Left="274" Width="40">
-
-                <Button x:Name="btn_reroll" Content="" Height="40" Width="40" Click="btn_reroll_Click" Style="{DynamicResource ButtonStyle}" Background="#FFE66A79">
+            <Button x:Name="btn_movie_info" VerticalContentAlignment="Center" HorizontalContentAlignment ="Center"  Content="О фильме" Height="30" Width="75" Click="btn_movie_info_Click" Style="{DynamicResource ButtonStyle}" Background="#FFA2424E" Foreground="White" FontFamily="Montserrat SemiBold" Canvas.Left="114" IsEnabled="False" FontSize="11" Canvas.Top="7">
+                <Button.ToolTip>
+                    <ToolTip Width="200" Height="25">
+                        <StackPanel>
+                            <TextBlock Text="Вывести информацию о фильме"/>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button x:Name="btn_search" VerticalContentAlignment="Center" HorizontalContentAlignment ="Center"  Content="🔍" Height="30" Width="73" Click="btn_search_Click" Style="{DynamicResource ButtonStyle}" Background="#FFA2424E" Foreground="White" FontFamily="Montserrat SemiBold" Canvas.Left="31" IsEnabled="False" Canvas.Top="7">
+                <Button.ToolTip>
+                    <ToolTip Width="105" Height="25">
+                        <StackPanel>
+                            <TextBlock Text="Найти в Яндексе"/>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button x:Name="btn_history" VerticalContentAlignment="Center" HorizontalContentAlignment ="Center"  Content="История" Height="30" Width="73" Style="{DynamicResource ButtonStyle}" Background="#FFA2424E" Foreground="White" FontFamily="Montserrat SemiBold" Canvas.Left="199" FontSize="11" IsEnabled="False" Canvas.Top="7" Click="btn_history_Click">
+                <Button.ToolTip>
+                    <ToolTip Width="250" Height="25">
+                        <StackPanel>
+                            <TextBlock Text="История подобранных фильмов за сессию"/>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Canvas Height="40" Canvas.Left="254" Width="40">
+                <Button x:Name="btn_reroll" Content="Подобрать фильм!" Height="50" Width="300" Click="btn_roll_Click" Style="{DynamicResource ButtonStyle}" Background="#FFE66A79" FontFamily="Montserrat SemiBold" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="-252" Canvas.Top="114">
                     <Button.ToolTip>
                         <ToolTip Width="155" Height="25">
                             <StackPanel>
@@ -57,23 +83,14 @@
                         </ToolTip>
                     </Button.ToolTip>
                 </Button>
-                <Image x:Name="reroll_image" IsHitTestVisible="False" Source="reload.png" Stretch="Fill" Height="20" Canvas.Left="10" Width="20" ForceCursor="True" MouseEnter="reroll_image_MouseEnter" MouseLeave="reroll_image_MouseLeave" Canvas.Top="10"/>
-            </Canvas>
-            <Canvas Height="19" Canvas.Left="263" Canvas.Top="37" Width="19">
-                <Button x:Name="btn_search" VerticalContentAlignment="Center" HorizontalContentAlignment ="Center"  Content="" Height="19" Width="19" Click="btn_search_Click" Style="{DynamicResource ButtonStyle}" Background="#FFE66A79" Foreground="#FF9E6ED6" FontSize="6" FontFamily="Montserrat SemiBold">
-                    <Button.ToolTip>
-                        <ToolTip Width="105" Height="25">
-                            <StackPanel>
-                                <TextBlock Text="Найти в Яндексе"/>
-                            </StackPanel>
-                        </ToolTip>
-                    </Button.ToolTip>
-                </Button>
-                <Image x:Name="search_image" IsHitTestVisible="False" Source="search.png" Stretch="Fill" Height="11" Canvas.Left="4" Canvas.Top="4" Width="11"/>
+                <Image x:Name="reroll_image" IsHitTestVisible="False" Source="reroll_icon.png" Stretch="Fill" Height="24" Canvas.Left="11" Width="24" ForceCursor="True" MouseEnter="reroll_image_MouseEnter" MouseLeave="reroll_image_MouseLeave" Canvas.Top="8" Visibility="Hidden"/>
             </Canvas>
         </Canvas>
         <Canvas Margin="192,127,75,166">
-            <xctk:RangeSlider x:Name="years_slider" HorizontalAlignment="Left" VerticalAlignment="Top" Minimum="1950" RangeBackground="#FFE66A79" Height="25" Maximum="2021" Step="1" Width="127" LowerValueChanged="years_slider_LowerValueChanged" HigherValueChanged="years_slider_HigherValueChanged" Canvas.Left="6" Canvas.Top="24" BorderBrush="White" BorderThickness="0" HigherRangeBackground="{x:Null}">
+            <xctk:RangeSlider x:Name="years_slider" HorizontalAlignment="Left" VerticalAlignment="Top" Minimum="1950" RangeBackground="#FFE66A79" Height="25" Maximum="2021" Step="1" Width="116" LowerValueChanged="years_slider_LowerValueChanged" HigherValueChanged="years_slider_HigherValueChanged" Canvas.Left="22" BorderBrush="White" BorderThickness="0" HigherRangeBackground="{x:Null}" Canvas.Top="55">
+                <xctk:RangeSlider.Effect>
+                    <DropShadowEffect Direction="0" BlurRadius="40" ShadowDepth="0" Color="#FFE66A79" Opacity="0.7"/>
+                </xctk:RangeSlider.Effect>
                 <xctk:RangeSlider.ToolTip>
                     <ToolTip Width="150" Height="25">
                         <StackPanel>
@@ -82,15 +99,10 @@
                     </ToolTip>
                 </xctk:RangeSlider.ToolTip>
             </xctk:RangeSlider>
-            <Label x:Name="year_lower_b" Content="1950" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontFamily="Montserrat SemiBold"/>
-            <Label x:Name="year_higher_b" Content="1950" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Canvas.Left="86" Canvas.Top="1" FontFamily="Montserrat SemiBold"/>
         </Canvas>
-        <TextBlock HorizontalAlignment="Left" Height="79" Margin="197,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" Foreground="#FFE66A79" FontFamily="Montserrat SemiBold" FontSize="10"><Run Text="Не можешь найти"/><Run Text=" фильм для просмотра"/><Run Text="? "/><LineBreak/><Run/><LineBreak/><Run Text="Я помогу"/>
+        <TextBlock HorizontalAlignment="Left" Height="79" Margin="197,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" Foreground="#FFE66A79" FontFamily="Montserrat SemiBold" FontSize="10" Visibility="Hidden"><Run Text="Не можешь найти"/><Run Text=" фильм для просмотра"/><Run Text="? "/><LineBreak/><Run/><LineBreak/><Run Text="Я помогу"/>
         </TextBlock>
-        <Rectangle x:Name="loading_background" Fill="#FF1D1B21" HorizontalAlignment="Left" Height="365" Margin="-15,-10,-14,-12" RadiusY="20" RadiusX="20" VerticalAlignment="Top" Width="425" Opacity="0.8" Visibility="Hidden"/>
-        <Image x:Name="loading_animation" gif:ImageBehavior.RepeatBehavior="100x"
-            gif:ImageBehavior.AnimatedSource="loading_3.gif" Margin="106,92" Visibility="Hidden" />
-        <Image Source="emoji.png" Stretch="Fill" Margin="246,81,90,201" RenderTransformOrigin="0.5,0.5">
+        <Image Source="emoji.png" Margin="249,18,104,305" RenderTransformOrigin="0.5,0.5" Visibility="Hidden">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleX="-1"/>
@@ -103,7 +115,41 @@
                 <DropShadowEffect Opacity="0.4" ShadowDepth="0" Color="#FFf74d61" BlurRadius="35"/>
             </Image.Effect>
         </Image>
-        <Image IsHitTestVisible="False" Margin="-280,-255,-246,-324" Source="noise.png" Stretch="Fill" Opacity="0.02" d:IsHidden="True"/>
-    </Grid>
+        <TextBox x:Name="year_higher_b" HorizontalAlignment="Left" Height="21" Margin="288,160,0,0" Text="" VerticalAlignment="Top" Width="42" SelectionOpacity="4" Foreground="White" Background="Black" FontFamily="Montserrat SemiBold" PreviewTextInput="text_PreviewTextInput" TextChanged="year_higher_b_TextChanged" LostKeyboardFocus="year_higher_b_LostKeyboardFocus" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaxLines="1" SelectionBrush="#FF8B8B8B" MinLines="1" AutoWordSelection="True" Style="{DynamicResource ComboBoxEditableTextBox}" CaretBrush="Red" UseLayoutRounding="False"/>
+        <ComboBox x:Name="set_to_find" HorizontalAlignment="Left" Margin="213,89,0,0" VerticalAlignment="Top" Width="111" SelectedIndex="0" Style="{DynamicResource ComboBoxStyle}" Height="26" FontFamily="Montserrat SemiBold" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="year_lower_b" HorizontalAlignment="Left" Height="21" Margin="213,160,0,0" Text="" VerticalAlignment="Top" Width="42" SelectionOpacity="4" Foreground="White" Background="Red" BorderBrush="{x:Null}" FontFamily="Montserrat SemiBold" PreviewTextInput="text_PreviewTextInput" TextChanged="year_lower_b_TextChanged" LostKeyboardFocus="year_lower_b_LostKeyboardFocus" VerticalContentAlignment="Center" MaxLines="1" SelectionBrush="#FF8B8B8B" MinLines="1" AutoWordSelection="True" Style="{DynamicResource ComboBoxEditableTextBox}" CaretBrush="Red"/>
+        <Rectangle x:Name="loading_background" Fill="#FF1D1B21" HorizontalAlignment="Left" Height="465" Margin="-15,-10,-16,-15" RadiusY="20" RadiusX="20" VerticalAlignment="Top" Width="425" Opacity="0.8" Visibility="Hidden"/>
+        <Canvas x:Name="canvas_history" Margin="64,58,70,114" Visibility="Hidden">
+            <Rectangle Fill="#FF1D1B21" HorizontalAlignment="Left" Height="268" RadiusY="20" RadiusX="20" VerticalAlignment="Top" Width="260" Opacity="0.95" d:IsHidden="True">
+                <Rectangle.Effect>
+                    <DropShadowEffect BlurRadius="40" ShadowDepth="0" Opacity="0.4" Color="#FFE66A79" Direction="100"/>
+                </Rectangle.Effect>
+            </Rectangle>
+            <Button x:Name="btn_close_history" Content="Закрыть" HorizontalAlignment="Left" Height="33" VerticalAlignment="Top" Width="240" Style="{DynamicResource ButtonStyle}" Background="#FFE66A79" Canvas.Top="222" Canvas.Left="10" Click="btn_close_history_Click"/>
+            <Label x:Name="history__label" Content="История поиска" Canvas.Left="10" Width="240" FontFamily="Montserrat SemiBold" Background="{x:Null}" Foreground="White" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="45" Canvas.Top="6"/>
+            <TextBox x:Name="tb_history" IsReadOnly="True" Height="145" TextWrapping="Wrap" Width="218" Canvas.Left="21" Canvas.Top="56" Background="{x:Null}" Foreground="White" FontFamily="Montserrat SemiBold" BorderBrush="{x:Null}" SelectionBrush="#FF787878" Style="{DynamicResource ComboBoxEditableTextBox}" CaretBrush="White"/>
+        </Canvas>
+        <Image x:Name="loading_animation" gif:ImageBehavior.RepeatBehavior="10000x"
+            gif:ImageBehavior.AnimatedSource="loading_3.gif" Margin="106,92" Visibility="Hidden" />
 
+        <Canvas x:Name="canvas_info" Margin="64,122,70,114" Visibility="Hidden">
+            <Rectangle Fill="#FF1D1B21" HorizontalAlignment="Left" Height="188" RadiusY="20" RadiusX="20" VerticalAlignment="Top" Width="260" Opacity="0.95" d:IsHidden="True">
+                <Rectangle.Effect>
+                    <DropShadowEffect BlurRadius="40" ShadowDepth="0" Opacity="0.4" Color="#FFE66A79" Direction="100"/>
+                </Rectangle.Effect>
+
+            </Rectangle>
+            <Button x:Name="info_close" Content="Закрыть" HorizontalAlignment="Left" Height="33" VerticalAlignment="Top" Width="240" Style="{DynamicResource ButtonStyle}" Background="#FFE66A79" Canvas.Top="144" Canvas.Left="10" Click="info_close_Click"/>
+            <Label x:Name="info_title" Content="Название" Canvas.Left="10" Width="240" FontFamily="Montserrat SemiBold" Background="{x:Null}" Foreground="White" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="45" Canvas.Top="6"/>
+            <Label x:Name="info_label1" Content="Рейтинг:" Canvas.Left="21" Canvas.Top="48" Width="70" FontFamily="Montserrat SemiBold" Background="{x:Null}" Foreground="White" VerticalContentAlignment="Center"/>
+            <Label x:Name="info_label3" Content="Жанры:" Canvas.Left="21" Canvas.Top="96" Width="60" FontFamily="Montserrat SemiBold" Background="{x:Null}" Foreground="White" VerticalContentAlignment="Center"/>
+            <Label x:Name="info_label2" Content="Кол-во голосов:" Canvas.Left="21" Canvas.Top="72" Width="110" FontFamily="Montserrat SemiBold" Background="{x:Null}" Foreground="White" VerticalContentAlignment="Center"/>
+            <Label x:Name="info_rating" Content="" Canvas.Left="86" Canvas.Top="48" Width="155" FontFamily="Montserrat SemiBold" Background="{x:Null}" Foreground="White" VerticalContentAlignment="Center"/>
+            <TextBox x:Name="info_genres" IsReadOnly="True" Height="33" TextWrapping="Wrap" Width="160" Canvas.Left="81" Canvas.Top="100" Background="{x:Null}" Foreground="White" FontFamily="Montserrat SemiBold" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Style="{DynamicResource ComboBoxEditableTextBox}"/>
+            <Label x:Name="info_genres_" Canvas.Left="81" Canvas.Top="96" Width="160" FontFamily="Montserrat SemiBold" Background="{x:Null}" Foreground="White" Height="43" d:IsHidden="True"/>
+            <Label x:Name="info_amnt_votes" Content="" Canvas.Left="131" Canvas.Top="72" Width="110" FontFamily="Montserrat SemiBold" Background="{x:Null}" Foreground="White" VerticalContentAlignment="Center"/>
+        </Canvas>
+        <Image IsHitTestVisible="False" Margin="-280,-255,-246,-324" Source="noise_background.png" Opacity="0.02" d:IsHidden="True"/>
+        <Label Content="Подбор по &#xD;&#xA;выбранным жанрам" HorizontalAlignment="Left" Height="32" Margin="207,52,0,0" VerticalAlignment="Top" Width="172" FontFamily="Montserrat SemiBold" Foreground="White" FontSize="10"/>
+    </Grid>
 </Window>
