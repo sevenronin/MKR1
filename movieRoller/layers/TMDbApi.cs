@@ -21,27 +21,15 @@ namespace TMDbApi
             client = new TMDbClient(api_key);
             client.DefaultLanguage = "ru";
         }
-        
-<<<<<<< HEAD
-        async public Task api_ParseMovie(List<int> genresIDs, int primary_year, int amnt_pages, bool age_flag)
-        {
-            try
-            {
-                rolled_movies = await client.
-                       DiscoverMoviesAsync().
-                       IncludeAdultMovies(age_flag).
-                       IncludeWithAnyOfGenre(genresIDs).
-                       OrderBy(DiscoverMovieSortBy.PopularityDesc).
-                       WherePrimaryReleaseIsInYear(primary_year).
-                       Query(new Random().Next(1, amnt_pages));
-=======
-        async public Task api_ParseMovie(List<int> genresIDs, int primary_year, int amnt_pages, bool all_genres)
+  
+        async public Task api_ParseMovie(List<int> genresIDs, int primary_year, int amnt_pages, bool all_genres, bool age_flag)
         {
             try
             {
                 if (!all_genres)
                     rolled_movies = await client.
                            DiscoverMoviesAsync().
+                           IncludeAdultMovies(age_flag).
                            IncludeWithAnyOfGenre(genresIDs).
                            OrderBy(DiscoverMovieSortBy.PopularityDesc).
                            WherePrimaryReleaseIsInYear(primary_year).
@@ -50,13 +38,15 @@ namespace TMDbApi
                            Query(new Random().Next(1, amnt_pages));
                 else rolled_movies = await client.
                      DiscoverMoviesAsync().
+                     IncludeAdultMovies(age_flag).
                      IncludeWithAllOfGenre(genresIDs).
                      OrderBy(DiscoverMovieSortBy.PopularityDesc).
                      WherePrimaryReleaseIsInYear(primary_year).
                      WhereReleaseDateIsBefore(DateTime.Now).   //До сегодня
                      WhereReleaseDateIsInRegion("RU").      //в России
                      Query(new Random().Next(1, amnt_pages));
->>>>>>> develop
+
+            
             }
             catch (Exception) { }
         }
