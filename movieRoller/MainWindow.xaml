@@ -43,7 +43,7 @@
             <CheckBox x:Name="cb_horror" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Content="Ужасы" Foreground="White" Unchecked="cb_horror_Unchecked" Checked="cb_horror_Checked" FontFamily="Montserrat SemiBold" FontSize="16" Style="{DynamicResource CheckBoxStyle}" Canvas.Top="93" />
             <ComboBox x:Name="genres_list" HorizontalAlignment="Left" VerticalAlignment="Top" Width="119" SelectionChanged="genres_list_SelectionChanged" SelectedIndex="0" FontFamily="Montserrat SemiBold" BorderBrush="Transparent" Background="White" VerticalContentAlignment="Center" Style="{DynamicResource ComboBoxStyle}" Height="26" Canvas.Left="22" Canvas.Top="122" IsEnabled="False"/>
             <CheckBox x:Name="cb_other" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="19" Content="" Foreground="White" Checked="cb_other_Checked" Unchecked="cb_other_Unchecked" FontFamily="Montserrat SemiBold" FontSize="16" Style="{DynamicResource CheckBoxStyle}" Canvas.Top="124" />
-            <CheckBox x:Name="cb_age" Content="Фильмы 21+" Canvas.Left="150" Canvas.Top="127" Height="21" Style="{DynamicResource CheckBoxStyle}" FontFamily="Montserrat SemiBold" FontSize="16" Foreground="White"/>
+            <CheckBox x:Name="cb_age" Content="Фильмы 18+" Height="21" Style="{DynamicResource CheckBoxStyle}" FontFamily="Montserrat SemiBold" Foreground="White" Canvas.Top="68" VerticalContentAlignment="Bottom" Canvas.Left="149" FontSize="14"/>
         </Canvas>
         <Canvas x:Name="rolled_movie_canvas" HorizontalAlignment="Center" VerticalAlignment="Center" Width="302" Height="174" Margin="46,235,46,31">
 
@@ -97,7 +97,7 @@
             </Canvas>
         </Canvas>
         <Canvas Margin="192,127,75,166">
-            <xctk:RangeSlider x:Name="years_slider" HorizontalAlignment="Left" VerticalAlignment="Top" Minimum="1950" RangeBackground="#FFE66A79" Height="25" Maximum="2021" Step="1" Width="127" LowerValueChanged="years_slider_LowerValueChanged" HigherValueChanged="years_slider_HigherValueChanged" Canvas.Left="22" Canvas.Top="16" BorderBrush="White" BorderThickness="0" HigherRangeBackground="{x:Null}">
+            <xctk:RangeSlider x:Name="years_slider" HorizontalAlignment="Left" VerticalAlignment="Top" Minimum="1950" RangeBackground="#FFE66A79" Height="25" Maximum="2021" Step="1" Width="116" LowerValueChanged="years_slider_LowerValueChanged" HigherValueChanged="years_slider_HigherValueChanged" Canvas.Left="22" BorderBrush="White" BorderThickness="0" HigherRangeBackground="{x:Null}" Canvas.Top="55">
                 <xctk:RangeSlider.Effect>
                     <DropShadowEffect Direction="0" BlurRadius="40" ShadowDepth="0" Color="#FFE66A79" Opacity="0.7"/>
                 </xctk:RangeSlider.Effect>
@@ -125,9 +125,9 @@
                 <DropShadowEffect Opacity="0.4" ShadowDepth="0" Color="#FFf74d61" BlurRadius="35"/>
             </Image.Effect>
         </Image>
-        <TextBox x:Name="year_higher_b" HorizontalAlignment="Left" Height="21" Margin="298,121,0,0" Text="" VerticalAlignment="Top" Width="42" SelectionOpacity="4" Foreground="White" Background="Black" FontFamily="Montserrat SemiBold" PreviewTextInput="text_PreviewTextInput" TextChanged="year_higher_b_TextChanged" LostKeyboardFocus="year_higher_b_LostKeyboardFocus" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaxLines="1" SelectionBrush="#FF8B8B8B" MinLines="1" AutoWordSelection="True" Style="{DynamicResource ComboBoxEditableTextBox}" CaretBrush="Red" UseLayoutRounding="False"/>
-        <ComboBox x:Name="set_to_find" HorizontalAlignment="Left" Margin="213,86,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Style="{DynamicResource ComboBoxStyle}"/>
-        <TextBox x:Name="year_lower_b" HorizontalAlignment="Left" Height="21" Margin="213,121,0,0" Text="" VerticalAlignment="Top" Width="42" SelectionOpacity="4" Foreground="White" Background="Red" BorderBrush="{x:Null}" FontFamily="Montserrat SemiBold" PreviewTextInput="text_PreviewTextInput" TextChanged="year_lower_b_TextChanged" LostKeyboardFocus="year_lower_b_LostKeyboardFocus" VerticalContentAlignment="Center" MaxLines="1" SelectionBrush="#FF8B8B8B" MinLines="1" AutoWordSelection="True" Style="{DynamicResource ComboBoxEditableTextBox}" CaretBrush="Red"/>
+        <TextBox x:Name="year_higher_b" HorizontalAlignment="Left" Height="21" Margin="288,160,0,0" Text="" VerticalAlignment="Top" Width="42" SelectionOpacity="4" Foreground="White" Background="Black" FontFamily="Montserrat SemiBold" PreviewTextInput="text_PreviewTextInput" TextChanged="year_higher_b_TextChanged" LostKeyboardFocus="year_higher_b_LostKeyboardFocus" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaxLines="1" SelectionBrush="#FF8B8B8B" MinLines="1" AutoWordSelection="True" Style="{DynamicResource ComboBoxEditableTextBox}" CaretBrush="Red" UseLayoutRounding="False"/>
+        <ComboBox x:Name="set_to_find" HorizontalAlignment="Left" Margin="213,89,0,0" VerticalAlignment="Top" Width="111" SelectedIndex="0" Style="{DynamicResource ComboBoxStyle}" Height="26" FontFamily="Montserrat SemiBold" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="year_lower_b" HorizontalAlignment="Left" Height="21" Margin="213,160,0,0" Text="" VerticalAlignment="Top" Width="42" SelectionOpacity="4" Foreground="White" Background="Red" BorderBrush="{x:Null}" FontFamily="Montserrat SemiBold" PreviewTextInput="text_PreviewTextInput" TextChanged="year_lower_b_TextChanged" LostKeyboardFocus="year_lower_b_LostKeyboardFocus" VerticalContentAlignment="Center" MaxLines="1" SelectionBrush="#FF8B8B8B" MinLines="1" AutoWordSelection="True" Style="{DynamicResource ComboBoxEditableTextBox}" CaretBrush="Red"/>
         <Rectangle x:Name="loading_background" Fill="#FF1D1B21" HorizontalAlignment="Left" Height="465" Margin="-15,-10,-16,-15" RadiusY="20" RadiusX="20" VerticalAlignment="Top" Width="425" Opacity="0.8" Visibility="Hidden"/>
         <Canvas x:Name="canvas_history" Margin="64,58,70,114" Visibility="Hidden">
             <Rectangle Fill="#FF1D1B21" HorizontalAlignment="Left" Height="268" RadiusY="20" RadiusX="20" VerticalAlignment="Top" Width="260" Opacity="0.95" d:IsHidden="True">
@@ -160,6 +160,6 @@
             <Label x:Name="info_amnt_votes" Content="" Canvas.Left="131" Canvas.Top="72" Width="110" FontFamily="Montserrat SemiBold" Background="{x:Null}" Foreground="White" VerticalContentAlignment="Center"/>
         </Canvas>
         <Image IsHitTestVisible="False" Margin="-280,-255,-246,-324" Source="noise.png" Opacity="0.02" d:IsHidden="True"/>
-        <Label Content="Подбор по жанрам" HorizontalAlignment="Left" Height="27" Margin="207,57,0,0" VerticalAlignment="Top" Width="140" FontFamily="Montserrat SemiBold" Foreground="White"/>
+        <Label Content="Подбор по &#xD;&#xA;выбранным жанрам" HorizontalAlignment="Left" Height="32" Margin="207,52,0,0" VerticalAlignment="Top" Width="172" FontFamily="Montserrat SemiBold" Foreground="White" FontSize="10"/>
     </Grid>
 </Window>
