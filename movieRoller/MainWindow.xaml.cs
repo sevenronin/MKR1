@@ -14,6 +14,7 @@ namespace movieRoller
         Roller.MovieRoller roller; // сам подборщик фильмов
         Genres.Title chosenOtherGenre; // выбранный "другой" жанр
         List<int>GenresIDs = new List<int>();
+        List<string> history = new List<string>();  //список для истории найденных фильмов
 
         int year_l_border, year_r_border;
         int checking_pages = 3;
@@ -46,6 +47,8 @@ namespace movieRoller
             {
                 if(cb_age.IsChecked == true) await roller.ParseMovie(year_l_border, year_r_border, checking_pages, false); //вернет фильм с ограничением до 18, информацию о котром я выведу на экран
                 else await roller.ParseMovie(year_l_border, year_r_border, checking_pages, true); //вернет фильм без ограничения по возрасту, информацию о котром я выведу на экран
+                if (history.Count > 9) history.RemoveAt(0);    //храним только последние 10 найденных фильмов
+                history.Add(Convert.ToString(roller.return_movie().Title));   //запоминаем найденный фильм
             }
             catch (Exception) { };
 
@@ -242,6 +245,26 @@ namespace movieRoller
                 info_genres.Text += Enum.GetName(typeof(Genres.RuTitle), rolled_movie.GenreIds[genre]);
                 if (genre != rolled_movie.GenreIds.Count - 1) info_genres.Text += ", ";
             }
+        }
+
+        private void btn_history_Click(object sender, RoutedEventArgs e)
+        {
+            canvas_history.Visibility = Visibility.Visible;
+            loading_background.Visibility = Visibility.Visible;
+            tb_history.Clear();
+            int i = 1;
+            foreach(string film in history)     //построчный вывод подобранных фильмов
+            {
+                if (i != history.Count) tb_history.Text += Convert.ToString(i) + ". " + Convert.ToString(film) + Environment.NewLine;
+                else tb_history.Text += Convert.ToString(i) + ". " + Convert.ToString(film);
+                i++;
+            }
+        }
+
+        private void btn_close_history_Click(object sender, RoutedEventArgs e)
+        {
+            canvas_history.Visibility = Visibility.Hidden;
+            loading_background.Visibility = Visibility.Hidden;
         }
 
         private void btn_search_Click(object sender, RoutedEventArgs e)

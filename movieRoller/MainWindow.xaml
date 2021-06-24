@@ -74,7 +74,7 @@
                     </ToolTip>
                 </Button.ToolTip>
             </Button>
-            <Button x:Name="btn_history" VerticalContentAlignment="Center" HorizontalContentAlignment ="Center"  Content="История" Height="30" Width="73" Style="{DynamicResource ButtonStyle}" Background="#FFA2424E" Foreground="White" FontFamily="Montserrat SemiBold" Canvas.Left="199" FontSize="11" IsEnabled="False" Canvas.Top="7">
+            <Button x:Name="btn_history" VerticalContentAlignment="Center" HorizontalContentAlignment ="Center"  Content="История" Height="30" Width="73" Style="{DynamicResource ButtonStyle}" Background="#FFA2424E" Foreground="White" FontFamily="Montserrat SemiBold" Canvas.Left="199" FontSize="11" IsEnabled="False" Canvas.Top="7" Click="btn_history_Click">
                 <Button.ToolTip>
                     <ToolTip Width="250" Height="25">
                         <StackPanel>
@@ -130,8 +130,9 @@
         <Rectangle x:Name="loading_background" Fill="#FF1D1B21" HorizontalAlignment="Left" Height="465" Margin="-15,-10,-16,-15" RadiusY="20" RadiusX="20" VerticalAlignment="Top" Width="425" Opacity="0.8" Visibility="Hidden"/>
         <Image x:Name="loading_animation" gif:ImageBehavior.RepeatBehavior="10000x"
             gif:ImageBehavior.AnimatedSource="loading_3.gif" Margin="106,92" Visibility="Hidden" />
+
         <Canvas x:Name="canvas_info" Margin="64,122,70,114" Visibility="Hidden">
-            <Rectangle Fill="#FF1D1B21" HorizontalAlignment="Left" Height="188" RadiusY="20" RadiusX="20" VerticalAlignment="Top" Width="260" Opacity="0.95">
+            <Rectangle Fill="#FF1D1B21" HorizontalAlignment="Left" Height="188" RadiusY="20" RadiusX="20" VerticalAlignment="Top" Width="260" Opacity="0.95" d:IsHidden="True">
                 <Rectangle.Effect>
                     <DropShadowEffect BlurRadius="40" ShadowDepth="0" Opacity="0.4" Color="#FFE66A79" Direction="100"/>
                 </Rectangle.Effect>
@@ -148,6 +149,17 @@
             <Label x:Name="info_amnt_votes" Content="" Canvas.Left="131" Canvas.Top="72" Width="110" FontFamily="Montserrat SemiBold" Background="{x:Null}" Foreground="White" VerticalContentAlignment="Center"/>
         </Canvas>
         <Image IsHitTestVisible="False" Margin="-280,-255,-246,-324" Source="noise.png" Opacity="0.02" d:IsHidden="True"/>
-    </Grid>
+        <Canvas x:Name="canvas_history" Margin="64,58,70,114" Visibility="Hidden">
+            <Rectangle Fill="#FF1D1B21" HorizontalAlignment="Left" Height="268" RadiusY="20" RadiusX="20" VerticalAlignment="Top" Width="260" Opacity="0.95" d:IsHidden="True">
+                <Rectangle.Effect>
+                    <DropShadowEffect BlurRadius="40" ShadowDepth="0" Opacity="0.4" Color="#FFE66A79" Direction="100"/>
+                </Rectangle.Effect>
 
+            </Rectangle>
+
+            <Button x:Name="btn_close_history" Content="Закрыть" HorizontalAlignment="Left" Height="33" VerticalAlignment="Top" Width="240" Style="{DynamicResource ButtonStyle}" Background="#FFE66A79" Canvas.Top="222" Canvas.Left="10" Click="btn_close_history_Click"/>
+            <Label x:Name="history__label" Content="История поиска" Canvas.Left="10" Width="240" FontFamily="Montserrat SemiBold" Background="{x:Null}" Foreground="White" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="45" Canvas.Top="6"/>
+            <TextBox x:Name="tb_history" IsReadOnly="True" Height="145" TextWrapping="Wrap" Width="218" Canvas.Left="21" Canvas.Top="56" Background="{x:Null}" Foreground="White" FontFamily="Montserrat SemiBold" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Style="{DynamicResource ComboBoxEditableTextBox}"/>
+        </Canvas>
+    </Grid>
 </Window>
