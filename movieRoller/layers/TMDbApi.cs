@@ -36,6 +36,7 @@ namespace TMDbApi
                 if (!all_genres) request = request.IncludeWithAnyOfGenre(genresIDs);
                 else request = request.IncludeWithAllOfGenre(genresIDs);
                 rolled_movies = await request.Query(new Random().Next(1, amnt_pages));
+                Console.WriteLine("Эй" + rolled_movies.Results[0].Title);
             }
             catch (Exception) { }
         }
@@ -45,6 +46,7 @@ namespace TMDbApi
             if (genresIDs.Count == 0)
                 return null;
             rolled_movie = rolled_movies.Results[new Random().Next(0, rolled_movies.Results.Count() - 1)];
+            Console.WriteLine(rolled_movie.Title.ToString());
             return rolled_movie;
         }
     }

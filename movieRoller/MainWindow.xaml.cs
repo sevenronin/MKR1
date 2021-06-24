@@ -68,7 +68,7 @@ namespace movieRoller
             try
             {
                 int timeout = 5000;
-                var task = roller.ParseMovie(year_l_border, year_r_border, checking_pages, all_genres, !cb_age.IsChecked.Value);
+                var task = roller.ParseMovie(year_l_border, year_r_border, checking_pages, all_genres, cb_age.IsChecked.Value);
                 if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
                 {
                     rolled_movie = roller.return_movie();

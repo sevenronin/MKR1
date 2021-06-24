@@ -32,7 +32,6 @@ namespace Roller
             have_internet = true;
             if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
             {
-                //Console.WriteLine("Отсутствует или ограниченно физическое подключение к сети\nПроверьте настройки вашего сетевого подключения");
                 have_internet = false;
             }
 
