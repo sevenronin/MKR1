@@ -24,6 +24,7 @@ namespace movieRoller
             InitializeComponent();
             roller = new Roller.MovieRoller();
             fill_genres_list();
+            fill_set_to_find(); //заполнить выбор настроек
 
             years_slider.LowerValue = years_slider.Minimum;
             years_slider.HigherValue = years_slider.Maximum;
@@ -38,15 +39,19 @@ namespace movieRoller
 
         async public void roll_click()
         {
-            year_l_border = int.Parse(year_lower_b.Content.ToString());
-            year_r_border = int.Parse(year_higher_b.Content.ToString());
+            year_l_border = int.Parse(year_lower_b.Text.ToString());
+            year_r_border = int.Parse(year_higher_b.Text.ToString());
 
             loading_background.Visibility = Visibility.Visible;
             loading_animation.Visibility = Visibility.Visible;
+
+            bool all_genres;
+            if (Convert.ToString(set_to_find.SelectedItem) == "Хотя бы один") all_genres = false;
+            else all_genres = true;
             try
             {
-                if(cb_age.IsChecked == true) await roller.ParseMovie(year_l_border, year_r_border, checking_pages, false); //вернет фильм с ограничением до 18, информацию о котром я выведу на экран
-                else await roller.ParseMovie(year_l_border, year_r_border, checking_pages, true); //вернет фильм без ограничения по возрасту, информацию о котром я выведу на экран
+                if(cb_age.IsChecked == true) await roller.ParseMovie(year_l_border, year_r_border, checking_pages,all_genres, false); //вернет фильм с ограничением до 18, информацию о котром я выведу на экран
+                else await roller.ParseMovie(year_l_border, year_r_border, checking_pages, all_genres, true); //вернет фильм без ограничения по возрасту, информацию о котром я выведу на экран
                 if (history.Count > 9) history.RemoveAt(0);    //храним только последние 10 найденных фильмов
                 history.Add(Convert.ToString(roller.return_movie().Title));   //запоминаем найденный фильм
             }
@@ -208,12 +213,12 @@ namespace movieRoller
 
         private void years_slider_LowerValueChanged(object sender, RoutedEventArgs e)
         {
-            year_lower_b.Content = ((int)years_slider.LowerValue).ToString();
+            year_lower_b.Text = ((int)years_slider.LowerValue).ToString();
         }
 
         private void years_slider_HigherValueChanged(object sender, RoutedEventArgs e)
         {
-            year_higher_b.Content = ((int)years_slider.HigherValue).ToString();
+            year_higher_b.Text = ((int)years_slider.HigherValue).ToString();
         }
 
         private void reroll_image_MouseEnter(object sender, MouseEventArgs e)
@@ -247,6 +252,7 @@ namespace movieRoller
             }
         }
 
+<<<<<<< HEAD
         private void btn_history_Click(object sender, RoutedEventArgs e)
         {
             canvas_history.Visibility = Visibility.Visible;
@@ -265,11 +271,48 @@ namespace movieRoller
         {
             canvas_history.Visibility = Visibility.Hidden;
             loading_background.Visibility = Visibility.Hidden;
+=======
+       
+        private void year_higher_b_KeyUp(object sender, KeyEventArgs e)
+        {
+            char a = (char)e.Key;
+>>>>>>> develop
         }
 
         private void btn_search_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://yandex.ru/search/?lr=213&text=фильм " + Uri.EscapeUriString(roller.rolledMovie));
+        }
+
+        
+        private void year_higher_b_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)  //реагирование на изменение верхней границы
+        {
+            //Console.WriteLine("1");
+            if (year_higher_b.Text == "") year_higher_b.Text = Convert.ToString(years_slider.Maximum);
+            if (Convert.ToInt32(year_higher_b.Text) > Convert.ToInt32(DateTime.Now.Year))  
+                year_higher_b.Text = Convert.ToString(DateTime.Now.Year);
+            if (Convert.ToInt32(year_higher_b.Text) < Convert.ToInt32(year_lower_b.Text))
+                year_higher_b.Text = Convert.ToString(Convert.ToInt32(year_lower_b.Text)+1);
+            years_slider.HigherValue = Convert.ToInt32(year_higher_b.Text);   
+        }
+
+        private void year_lower_b_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)  //реагирвоание на изменение нижней границы
+        {
+            if (year_lower_b.Text == "") year_lower_b.Text = Convert.ToString(years_slider.Minimum);
+            if (Convert.ToInt32(year_lower_b.Text) < years_slider.Minimum)
+                year_lower_b.Text = Convert.ToString(years_slider.Minimum);
+            if (Convert.ToInt32(year_higher_b.Text) < Convert.ToInt32(year_lower_b.Text))
+                year_lower_b.Text = Convert.ToString(Convert.ToInt32(year_higher_b.Text) - 1);
+            years_slider.LowerValue = Convert.ToInt32(year_lower_b.Text);  
+        }
+
+
+
+        //настройка подбора по жанрам
+        private void fill_set_to_find()
+        {
+            set_to_find.Items.Add("Хотя бы один");
+            set_to_find.Items.Add("Как можно больше");            
         }
     }
 }

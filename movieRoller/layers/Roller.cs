@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMDbLib.Objects.Search;
+using System.Net.Sockets;
 
 namespace Roller
 {
@@ -25,6 +26,13 @@ namespace Roller
 
         public bool check_internet()
         {
+            have_internet = true;
+            if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            {
+                //Console.WriteLine("Отсутствует или ограниченно физическое подключение к сети\nПроверьте настройки вашего сетевого подключения");
+                have_internet = false;
+            }
+
             return have_internet;
         }
 
@@ -33,7 +41,9 @@ namespace Roller
             return rolled_movie;
         }
 
-        public async Task ParseMovie(int year_l_border, int year_r_border, int amnt_pages, bool age_flag)
+
+       
+        public async Task ParseMovie(int year_l_border, int year_r_border, int amnt_pages, bool all_genres, bool age_flag)
         {
             if (chosenGenresIDs.Count == 0)
             {
@@ -44,7 +54,8 @@ namespace Roller
             if (!have_internet)
                 return;
             primary_year = new Random().Next(year_l_border, year_r_border);
-            await client.api_ParseMovie(chosenGenresIDs, primary_year, amnt_pages, age_flag);
+                         
+            await client.api_ParseMovie(chosenGenresIDs, primary_year, amnt_pages, all_genres, age_flag);
             rolled_movie = client.return_movie(chosenGenresIDs);
         }
 
