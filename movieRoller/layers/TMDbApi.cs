@@ -33,7 +33,6 @@ namespace TMDbApi
                            WherePrimaryReleaseIsInYear(primary_year).
                            WhereReleaseDateIsBefore(DateTime.Now).   //До сегодня
                            WhereReleaseDateIsInRegion("RU");   //в России
-
                 if (!all_genres) request = request.IncludeWithAnyOfGenre(genresIDs);
                 else request = request.IncludeWithAllOfGenre(genresIDs);
                 rolled_movies = await request.Query(new Random().Next(1, amnt_pages));

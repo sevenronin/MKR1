@@ -18,14 +18,17 @@ namespace movieRoller
 
         int year_l_border, year_r_border;
         int checking_pages = 3;
-
+        int max_year = DateTime.Now.Year;
+        int min_year = 1950;
         public MainWindow()
         {
             InitializeComponent();
             roller = new Roller.MovieRoller();
             fill_genres_list();
             fill_set_to_find(); //заполнить выбор настроек
-
+            
+            years_slider.Maximum = max_year;
+            year_higher_b.Text = max_year.ToString();
             years_slider.LowerValue = years_slider.Minimum;
             years_slider.HigherValue = years_slider.Maximum;
         }
@@ -267,30 +270,54 @@ namespace movieRoller
             loading_background.Visibility = Visibility.Hidden;
 
         }
-            private void year_higher_b_KeyUp(object sender, KeyEventArgs e)
-            {
-                char a = (char)e.Key;
 
+        private void btn_search_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://yandex.ru/search/?lr=213&text=фильм " + Uri.EscapeUriString(roller.rolledMovie));
+        }
+
+
+        private void year_higher_b_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)  //реагирование на изменение верхней границы
+        {
+            if (year_higher_b.Text == "") year_higher_b.Text = Convert.ToString(years_slider.Maximum);
+            if (Convert.ToInt32(year_higher_b.Text) > Convert.ToInt32(DateTime.Now.Year))
+                year_higher_b.Text = Convert.ToString(DateTime.Now.Year);
+            if (Convert.ToInt32(year_higher_b.Text) < Convert.ToInt32(year_lower_b.Text))
+                year_higher_b.Text = Convert.ToString(Convert.ToInt32(year_lower_b.Text) + 1);
+            years_slider.HigherValue = Convert.ToInt32(year_higher_b.Text);
+        }
+
+        private void text_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !(Char.IsDigit(e.Text, 0)&&year_lower_b.Text.Length < 5&&year_higher_b.Text.Length < 5);
+        }
+
+        private void year_lower_b_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                int.Parse(year_lower_b.Text.ToString());
+            }
+            catch (Exception)
+            {
+                year_lower_b.Text = min_year.ToString();
             }
 
-            private void btn_search_Click(object sender, RoutedEventArgs e)
+        }
+
+        private void year_higher_b_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
             {
-                System.Diagnostics.Process.Start("https://yandex.ru/search/?lr=213&text=фильм " + Uri.EscapeUriString(roller.rolledMovie));
+                int.Parse(year_higher_b.Text.ToString());
             }
-
-
-            private void year_higher_b_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)  //реагирование на изменение верхней границы
+            catch (Exception)
             {
-                //Console.WriteLine("1");
-                if (year_higher_b.Text == "") year_higher_b.Text = Convert.ToString(years_slider.Maximum);
-                if (Convert.ToInt32(year_higher_b.Text) > Convert.ToInt32(DateTime.Now.Year))
-                    year_higher_b.Text = Convert.ToString(DateTime.Now.Year);
-                if (Convert.ToInt32(year_higher_b.Text) < Convert.ToInt32(year_lower_b.Text))
-                    year_higher_b.Text = Convert.ToString(Convert.ToInt32(year_lower_b.Text) + 1);
-                years_slider.HigherValue = Convert.ToInt32(year_higher_b.Text);
+                year_higher_b.Text = max_year.ToString();
             }
+        }
 
-            private void year_lower_b_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)  //реагирвоание на изменение нижней границы
+        private void year_lower_b_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)  //реагирвоание на изменение нижней границы
             {
                 if (year_lower_b.Text == "") year_lower_b.Text = Convert.ToString(years_slider.Minimum);
                 if (Convert.ToInt32(year_lower_b.Text) < years_slider.Minimum)
