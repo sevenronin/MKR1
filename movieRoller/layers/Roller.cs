@@ -23,7 +23,10 @@ namespace Roller
             client.Connect();
             ParseGenresIDs();
         }
-
+        public int GenresCount
+        {
+            get { return chosenGenresIDs.Count; }
+        }
         public bool check_internet()
         {
             have_internet = true;
@@ -40,11 +43,10 @@ namespace Roller
         {
             return rolled_movie;
         }
-
-
-       
+  
         public async Task ParseMovie(int year_l_border, int year_r_border, int amnt_pages, bool all_genres, bool age_flag)
         {
+            int timeout = 5000;
             if (chosenGenresIDs.Count == 0)
             {
                 rolled_movie = null;
@@ -54,7 +56,18 @@ namespace Roller
             if (!have_internet)
                 return;
             primary_year = new Random().Next(year_l_border, year_r_border);
-                         
+
+            /*var task = client.api_ParseMovie(chosenGenresIDs, primary_year, amnt_pages, all_genres, age_flag);
+            if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
+            {
+                rolled_movie = client.return_movie(chosenGenresIDs);
+            }
+            else
+            {
+                rolled_movie = null;
+                rolled_movie = client.return_movie(chosenGenresIDs);
+            }
+*/
             await client.api_ParseMovie(chosenGenresIDs, primary_year, amnt_pages, all_genres, age_flag);
             rolled_movie = client.return_movie(chosenGenresIDs);
         }

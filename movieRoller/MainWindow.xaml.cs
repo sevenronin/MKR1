@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Shapes;
 using TMDbLib.Objects.Search;
 using System.Windows.Media.Animation;
+using System.Threading.Tasks;
 namespace movieRoller
 {
     public partial class MainWindow : Window
@@ -13,7 +14,6 @@ namespace movieRoller
         SearchMovie rolled_movie;
         Roller.MovieRoller roller; // сам подборщик фильмов
         Genres.Title chosenOtherGenre; // выбранный "другой" жанр
-        List<int> GenresIDs = new List<int>();
         List<string> history = new List<string>();  //список для истории найденных фильмов
 
         int year_l_border, year_r_border;
@@ -39,33 +39,12 @@ namespace movieRoller
         //настройка подбора по жанрам
         private void fill_set_to_find()
         {
-            set_to_find.Items.Add("Хотя бы один");
-            set_to_find.Items.Add("Как можно больше");
+            set_to_find.Items.Add("Любой жанр");
+            set_to_find.Items.Add("Все жанры");
         }
 
         async public void roll_click()
         {
-            year_l_border = int.Parse(year_lower_b.Text.ToString());
-            year_r_border = int.Parse(year_higher_b.Text.ToString());
-
-            loading_background.Visibility = Visibility.Visible;
-            loading_animation.Visibility = Visibility.Visible;
-
-            bool all_genres;
-            if (Convert.ToString(set_to_find.SelectedItem) == "Хотя бы один") all_genres = false;
-            else all_genres = true;
-            try
-            {
-                if (cb_age.IsChecked == true) await roller.ParseMovie(year_l_border, year_r_border, checking_pages, all_genres, false); //вернет фильм с ограничением до 18, информацию о котром я выведу на экран
-                else await roller.ParseMovie(year_l_border, year_r_border, checking_pages, all_genres, true); //вернет фильм без ограничения по возрасту, информацию о котром я выведу на экран
-                if (roller.return_movie() != null)
-                {
-                    if (history.Count > 9) history.RemoveAt(0);    //храним только последние 10 найденных фильмов
-                    history.Add(Convert.ToString(roller.return_movie().Title));   //запоминаем найденный фильм
-                }
-            }
-            catch (Exception) { };
-
             if (!roller.check_internet())
             {
                 MessageBox.Show("Нет доступа к интернету!", "Ошибка");
@@ -73,52 +52,58 @@ namespace movieRoller
                 loading_animation.Visibility = Visibility.Hidden;
                 return;
             }
-            else
+
+            year_l_border = int.Parse(year_lower_b.Text.ToString());
+            year_r_border = int.Parse(year_higher_b.Text.ToString());
+
+            loading_background.Visibility = Visibility.Visible;
+            loading_animation.Visibility = Visibility.Visible;
+
+            bool all_genres;
+            if (Convert.ToString(set_to_find.SelectedItem) == "Любой жанр") all_genres = false;
+            else all_genres = true;
+            try
             {
-                rolled_movie = roller.return_movie();
-
-                loading_background.Visibility = Visibility.Hidden;
-                loading_animation.Visibility = Visibility.Hidden;
-
-                if (rolled_movie == null)
+                int timeout = 5000;
+                var task = roller.ParseMovie(year_l_border, year_r_border, checking_pages, all_genres, !cb_age.IsChecked.Value);
+                if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
                 {
-                    MessageBox.Show("Выберите хотя бы один жанр!");
+                    rolled_movie = roller.return_movie();
                 }
-                else
+                else rolled_movie = null;
+                if (rolled_movie != null)
                 {
-                    //string overview = "";
-                    txt_rolled_movie.Text = rolled_movie.Title;
-                    btn_movie_info.IsEnabled = true;
-                    btn_history.IsEnabled = true;
-                    btn_search.IsEnabled = true;
-                    //overview = rolled_movie.Overview;
-                    /*int words_in_str = 0;
-                    if (overview.Length < 10)
-                        overview = "Описание отсутствует";
-                    else
-                        for (int i = 0; i < overview.Length; ++i)
-                        {
-                            if (overview[i] == ' ')
-                            {
-                                if (words_in_str == 10)
-                                {
-                                    overview = overview.Insert(i, "\n");
-                                    words_in_str = 0;
-                                }
-                                else words_in_str++;
-                            }
-
-                        }
-                    main_Window.txt_rolled_movie.ToolTip = overview;*/
-
-                    if (txt_rolled_movie.Text.Length > 1)
-                    {
-                        btn_roll.Visibility = Visibility.Hidden; //если нажали кнопку рола фильма и рол был успешен, скроем кнопку
-                        rolled_movie_canvas.Visibility = Visibility.Visible;
-                    }
+                    if (history.Count > 9) history.RemoveAt(0);    //храним только последние 10 найденных фильмов
+                    history.Add(Convert.ToString(roller.return_movie().Title));   //запоминаем найденный фильм
                 }
             }
+            catch (Exception) {
+                rolled_movie = null;
+            };
 
+            loading_background.Visibility = Visibility.Hidden;
+            loading_animation.Visibility = Visibility.Hidden;
+            if (roller.GenresCount == 0)
+            {
+                MessageBox.Show("Выберите хотя бы один жанр!");
+            }
+            else if (rolled_movie == null)
+            {
+                MessageBox.Show("Упс...Произошла ошибка :c");
+            }
+            else
+            {
+                txt_rolled_movie.Text = rolled_movie.Title;
+                btn_movie_info.IsEnabled = true;
+                btn_history.IsEnabled = true;
+                btn_search.IsEnabled = true;
+                if (txt_rolled_movie.Text.Length > 1)
+                {
+                    btn_roll.Visibility = Visibility.Hidden; //если нажали кнопку рола фильма и рол был успешен, скроем кнопку
+                    rolled_movie_canvas.Visibility = Visibility.Visible;
+                }
+
+            }
         }
 
         private void btn_roll_Click(object sender, RoutedEventArgs e)
