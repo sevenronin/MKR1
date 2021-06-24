@@ -146,19 +146,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="reload.png" />
+    <Resource Include="reroll_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="search.png" />
+    <Resource Include="search_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="loading_3.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="фвфв.png" />
+    <Resource Include="background.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="noise.png" />
+    <Resource Include="noise_background.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="emoji.png" />

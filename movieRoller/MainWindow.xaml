@@ -12,10 +12,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-
-
-
-        <Image IsHitTestVisible="False" Margin="-305,-58.668,-550.638,-61.517" Source="фвфв.png" UseLayoutRounding="False" RenderTransformOrigin="0.5,0.5">
+        <Image IsHitTestVisible="False" Margin="-305,-58.668,-550.638,-61.517" Source="background.png" UseLayoutRounding="False" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleY="-1" ScaleX="1"/>
@@ -25,16 +22,9 @@
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-
-
-
         <Rectangle Fill="#FF1C181D" HorizontalAlignment="Left" Height="392" Margin="23,23,0,0" VerticalAlignment="Top" Width="341" RadiusY="30" RadiusX="30" Opacity="0.4"/>
-
-
         <Rectangle Fill="#FF1C181D" HorizontalAlignment="Left" Height="187" Margin="43,39.843,0,0" VerticalAlignment="Top" Width="301" RadiusY="20" RadiusX="20" Opacity="0.4"/>
         <Rectangle Fill="#FF1C181D" HorizontalAlignment="Left" Height="51" Margin="43,279,0,0" VerticalAlignment="Top" Width="301" RadiusY="20" RadiusX="20" Opacity="0.4"/>
-
-
         <Button x:Name="btn_roll" Content="Подобрать фильм" HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" Width="301" Click="btn_roll_Click" Cursor="Hand" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFE66A79" BorderBrush="#FFA061EA" Foreground="White" Margin="43,241.843,0,0" Style="{DynamicResource ButtonStyle}" FontSize="16" FontFamily="Montserrat SemiBold" Visibility="Hidden"/>
         <Canvas Margin="64,57.843,72,114.157">
             <CheckBox x:Name="cb_comedy" Content="Комедия" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="104" Foreground="White" Checked="cb_comedy_Checked" Unchecked="cb_comedy_Unchecked" FontFamily="Montserrat SemiBold" FontSize="16" BorderBrush="White" Background="White" Style="{DynamicResource CheckBoxStyle}" />
@@ -93,7 +83,7 @@
                         </ToolTip>
                     </Button.ToolTip>
                 </Button>
-                <Image x:Name="reroll_image" IsHitTestVisible="False" Source="reload.png" Stretch="Fill" Height="24" Canvas.Left="11" Width="24" ForceCursor="True" MouseEnter="reroll_image_MouseEnter" MouseLeave="reroll_image_MouseLeave" Canvas.Top="8" Visibility="Hidden"/>
+                <Image x:Name="reroll_image" IsHitTestVisible="False" Source="reroll_icon.png" Stretch="Fill" Height="24" Canvas.Left="11" Width="24" ForceCursor="True" MouseEnter="reroll_image_MouseEnter" MouseLeave="reroll_image_MouseLeave" Canvas.Top="8" Visibility="Hidden"/>
             </Canvas>
         </Canvas>
         <Canvas Margin="192,127,75,166">
@@ -159,7 +149,7 @@
             <Label x:Name="info_genres_" Canvas.Left="81" Canvas.Top="96" Width="160" FontFamily="Montserrat SemiBold" Background="{x:Null}" Foreground="White" Height="43" d:IsHidden="True"/>
             <Label x:Name="info_amnt_votes" Content="" Canvas.Left="131" Canvas.Top="72" Width="110" FontFamily="Montserrat SemiBold" Background="{x:Null}" Foreground="White" VerticalContentAlignment="Center"/>
         </Canvas>
-        <Image IsHitTestVisible="False" Margin="-280,-255,-246,-324" Source="noise.png" Opacity="0.02" d:IsHidden="True"/>
+        <Image IsHitTestVisible="False" Margin="-280,-255,-246,-324" Source="noise_background.png" Opacity="0.02" d:IsHidden="True"/>
         <Label Content="Подбор по &#xD;&#xA;выбранным жанрам" HorizontalAlignment="Left" Height="32" Margin="207,52,0,0" VerticalAlignment="Top" Width="172" FontFamily="Montserrat SemiBold" Foreground="White" FontSize="10"/>
     </Grid>
 </Window>
